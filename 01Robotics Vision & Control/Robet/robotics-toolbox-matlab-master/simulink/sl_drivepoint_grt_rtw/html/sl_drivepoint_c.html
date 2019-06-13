@@ -1,0 +1,698 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>RTW Report - sl_drivepoint.c</title>
+<style> .LN { font-style: italic; color: #888888 } </style>
+<style> .CT { font-style: italic; color: #117755 } </style>
+<style> .PP { font-style: bold;   color: #992211 } </style>
+<style> .KW { font-style: bold;   color: #112266 } </style>
+<style> .DT { font-style: bold;   color: #112266 } </style>
+<link rel="stylesheet" type="text/css" href="rtwreport.css"></link><script language="JavaScript" type="text/javascript" src="rtwreport_utils.js"></script>
+<SCRIPT type="text/javascript" src="rtwannotate.js"></SCRIPT>
+</head>
+<body bgcolor="#eeeeee" text="#1122aa" onload="try {if (top) { if (top.rtwFileOnLoad) top.rtwFileOnLoad(window.document); else local_onload();}} catch(err) {};if (typeof rtwannotate === 'function') {rtwannotate('sl_drivepoint_c_cov.xml');}">
+<p>
+<table border="0" cellspacing="0" cellpadding="6" width="100%%" height="100%%"><tr><td width="100%%" valign="top" bgcolor="#ffffff">
+<h4>File: <a href="../sl_drivepoint.c" target="rtwreport_document_frame" id="linkToText_plain">sl_drivepoint.c</a></h4>
+<pre id="RTWcode">
+<span><a class="LN" name="1">    1   </a><span class="CT">/*</span>
+</span><span><a class="LN" name="2">    2   </a><span class="CT"> * sl_drivepoint.c</span>
+</span><span><a class="LN" name="3">    3   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="4">    4   </a><span class="CT"> * Code generation for model "sl_drivepoint".</span>
+</span><span><a class="LN" name="5">    5   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="6">    6   </a><span class="CT"> * Model version              : 1.26</span>
+</span><span><a class="LN" name="7">    7   </a><span class="CT"> * Simulink Coder version : 8.6 (R2014a) 27-Dec-2013</span>
+</span><span><a class="LN" name="8">    8   </a><span class="CT"> * C source code generated on : Fri Mar 09 13:26:13 2018</span>
+</span><span><a class="LN" name="9">    9   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="10">   10   </a><span class="CT"> * Target selection: grt.tlc</span>
+</span><span><a class="LN" name="11">   11   </a><span class="CT"> * Note: GRT includes extra infrastructure and instrumentation for prototyping</span>
+</span><span><a class="LN" name="12">   12   </a><span class="CT"> * Embedded hardware selection: Generic-&gt;32-bit x86 compatible</span>
+</span><span><a class="LN" name="13">   13   </a><span class="CT"> * Code generation objectives: Unspecified</span>
+</span><span><a class="LN" name="14">   14   </a><span class="CT"> * Validation result: Not run</span>
+</span><span><a class="LN" name="15">   15   </a><span class="CT"> */</span>
+</span><span><a class="LN" name="16">   16   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&quot;rt_logging_mmi.h&quot;</font>
+</span><span><a class="LN" name="17">   17   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&quot;sl_drivepoint_capi.h&quot;</font>
+</span><span><a class="LN" name="18">   18   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&quot;sl_drivepoint.h&quot;</font>
+</span><span><a class="LN" name="19">   19   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&quot;sl_drivepoint_private.h&quot;</font>
+</span><span><a class="LN" name="20">   20   </a>
+</span><span><a class="LN" name="21">   21   </a><span class="CT">/* Block signals (auto storage) */</span>
+</span><span><a class="LN" name="22">   22   </a><a href="sl_drivepoint_h.html#type_B_sl_drivepoint_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_sl_drivepoint_T');" target="_self"><font color="#1122aa">B_sl_drivepoint_T</font></a> <a name="var_sl_drivepoint_B">sl_drivepoint_B</a>;
+</span><span><a class="LN" name="23">   23   </a>
+</span><span><a class="LN" name="24">   24   </a><span class="CT">/* Continuous states */</span>
+</span><span><a class="LN" name="25">   25   </a><a href="sl_drivepoint_h.html#type_X_sl_drivepoint_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_X_sl_drivepoint_T');" target="_self"><font color="#1122aa">X_sl_drivepoint_T</font></a> <a name="var_sl_drivepoint_X">sl_drivepoint_X</a>;
+</span><span><a class="LN" name="26">   26   </a>
+</span><span><a class="LN" name="27">   27   </a><span class="CT">/* Block states (auto storage) */</span>
+</span><span><a class="LN" name="28">   28   </a><a href="sl_drivepoint_h.html#type_DW_sl_drivepoint_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_sl_drivepoint_T');" target="_self"><font color="#1122aa">DW_sl_drivepoint_T</font></a> <a name="var_sl_drivepoint_DW">sl_drivepoint_DW</a>;
+</span><span><a class="LN" name="29">   29   </a>
+</span><span><a class="LN" name="30">   30   </a><span class="CT">/* Previous zero-crossings (trigger) states */</span>
+</span><span><a class="LN" name="31">   31   </a><a href="sl_drivepoint_h.html#type_PrevZCX_sl_drivepoint_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_PrevZCX_sl_drivepoint_T');" target="_self"><font color="#1122aa">PrevZCX_sl_drivepoint_T</font></a> <a name="var_sl_drivepoint_PrevZCX">sl_drivepoint_PrevZCX</a>;
+</span><span><a class="LN" name="32">   32   </a>
+</span><span><a class="LN" name="33">   33   </a><span class="CT">/* External outputs (root outports fed by signals with auto storage) */</span>
+</span><span><a class="LN" name="34">   34   </a><a href="sl_drivepoint_h.html#type_ExtY_sl_drivepoint_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_ExtY_sl_drivepoint_T');" target="_self"><font color="#1122aa">ExtY_sl_drivepoint_T</font></a> <a name="var_sl_drivepoint_Y">sl_drivepoint_Y</a>;
+</span><span><a class="LN" name="35">   35   </a>
+</span><span><a class="LN" name="36">   36   </a><span class="CT">/* Real-time model */</span>
+</span><span><a class="LN" name="37">   37   </a><a href="sl_drivepoint_types_h.html#type_RT_MODEL_sl_drivepoint_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_RT_MODEL_sl_drivepoint_T');" target="_self"><font color="#1122aa">RT_MODEL_sl_drivepoint_T</font></a> <a name="var_sl_drivepoint_M_">sl_drivepoint_M_</a>;
+</span><span><a class="LN" name="38">   38   </a><a href="sl_drivepoint_types_h.html#type_RT_MODEL_sl_drivepoint_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_RT_MODEL_sl_drivepoint_T');" target="_self"><font color="#1122aa">RT_MODEL_sl_drivepoint_T</font></a> *<span class="DT">const</span> <a name="var_sl_drivepoint_M">sl_drivepoint_M</a> = &amp;<a href="#var_sl_drivepoint_M_" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M_');" target="_self"><font color="#1122aa">sl_drivepoint_M_</font></a>;
+</span><span><a class="LN" name="39">   39   </a>
+</span><span><a class="LN" name="40">   40   </a><span class="CT">/*</span>
+</span><span><a class="LN" name="41">   41   </a><span class="CT"> * This function updates continuous states using the ODE3 fixed-step</span>
+</span><span><a class="LN" name="42">   42   </a><span class="CT"> * solver algorithm</span>
+</span><span><a class="LN" name="43">   43   </a><span class="CT"> */</span>
+</span><span><a class="LN" name="44">   44   </a><span class="DT">static</span> <span class="DT">void</span> <a name="fcn_rt_ertODEUpdateContinuousStates">rt_ertODEUpdateContinuousStates</a>(RTWSolverInfo *si )
+</span><span><a class="LN" name="45">   45   </a><b>{</b>
+</span><span><a class="LN" name="46">   46   </a>  <span class="CT">/* Solver Matrices */</span>
+</span><span><a class="LN" name="47">   47   </a>  <span class="DT">static</span> <span class="DT">const</span> real_T rt_ODE3_A[3] = <b>{</b>
+</span><span><a class="LN" name="48">   48   </a>    1.0/2.0, 3.0/4.0, 1.0
+</span><span><a class="LN" name="49">   49   </a>  <b>}</b>;
+</span><span><a class="LN" name="50">   50   </a>
+</span><span><a class="LN" name="51">   51   </a>  <span class="DT">static</span> <span class="DT">const</span> real_T rt_ODE3_B[3][3] = <b>{</b>
+</span><span><a class="LN" name="52">   52   </a>    <b>{</b> 1.0/2.0, 0.0, 0.0 <b>}</b>,
+</span><span><a class="LN" name="53">   53   </a>
+</span><span><a class="LN" name="54">   54   </a>    <b>{</b> 0.0, 3.0/4.0, 0.0 <b>}</b>,
+</span><span><a class="LN" name="55">   55   </a>
+</span><span><a class="LN" name="56">   56   </a>    <b>{</b> 2.0/9.0, 1.0/3.0, 4.0/9.0 <b>}</b>
+</span><span><a class="LN" name="57">   57   </a>  <b>}</b>;
+</span><span><a class="LN" name="58">   58   </a>
+</span><span><a class="LN" name="59">   59   </a>  time_T t = rtsiGetT(si);
+</span><span><a class="LN" name="60">   60   </a>  time_T tnew = rtsiGetSolverStopTime(si);
+</span><span><a class="LN" name="61">   61   </a>  time_T h = rtsiGetStepSize(si);
+</span><span><a class="LN" name="62">   62   </a>  real_T *x = rtsiGetContStates(si);
+</span><span><a class="LN" name="63">   63   </a>  <a href="sl_drivepoint_h.html#type_ODE3_IntgData" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_ODE3_IntgData');" target="_self"><font color="#1122aa">ODE3_IntgData</font></a> *id = (<a href="sl_drivepoint_h.html#type_ODE3_IntgData" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_ODE3_IntgData');" target="_self"><font color="#1122aa">ODE3_IntgData</font></a> *)rtsiGetSolverData(si);
+</span><span><a class="LN" name="64">   64   </a>  real_T *y = id-&gt;y;
+</span><span><a class="LN" name="65">   65   </a>  real_T *f0 = id-&gt;f[0];
+</span><span><a class="LN" name="66">   66   </a>  real_T *f1 = id-&gt;f[1];
+</span><span><a class="LN" name="67">   67   </a>  real_T *f2 = id-&gt;f[2];
+</span><span><a class="LN" name="68">   68   </a>  real_T hB[3];
+</span><span><a class="LN" name="69">   69   </a>  int_T i;
+</span><span><a class="LN" name="70">   70   </a>  int_T nXc = 3;
+</span><span><a class="LN" name="71">   71   </a>  rtsiSetSimTimeStep(si,MINOR_TIME_STEP);
+</span><span><a class="LN" name="72">   72   </a>
+</span><span><a class="LN" name="73">   73   </a>  <span class="CT">/* Save the state values at time t in y, we'll use x as ynew. */</span>
+</span><span><a class="LN" name="74">   74   </a>  (<span class="DT">void</span>) memcpy(y, x,
+</span><span><a class="LN" name="75">   75   </a>                (uint_T)nXc*<span class="KW">sizeof</span>(real_T));
+</span><span><a class="LN" name="76">   76   </a>
+</span><span><a class="LN" name="77">   77   </a>  <span class="CT">/* Assumes that rtsiSetT and ModelOutputs are up-to-date */</span>
+</span><span><a class="LN" name="78">   78   </a>  <span class="CT">/* f0 = f(t,y) */</span>
+</span><span><a class="LN" name="79">   79   </a>  rtsiSetdX(si, f0);
+</span><span><a class="LN" name="80">   80   </a>  <a href="#fcn_sl_drivepoint_derivatives" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_sl_drivepoint_derivatives');" target="_self"><font color="#1122aa">sl_drivepoint_derivatives</font></a>();
+</span><span><a class="LN" name="81">   81   </a>
+</span><span><a class="LN" name="82">   82   </a>  <span class="CT">/* f(:,2) = feval(odefile, t + hA(1), y + f*hB(:,1), args(:)(*)); */</span>
+</span><span><a class="LN" name="83">   83   </a>  hB[0] = h * rt_ODE3_B[0][0];
+</span><span><a class="LN" name="84">   84   </a>  <span class="KW">for</span> (i = 0; i &lt; nXc; i++) <b>{</b>
+</span><span><a class="LN" name="85">   85   </a>    x[i] = y[i] + (f0[i]*hB[0]);
+</span><span><a class="LN" name="86">   86   </a>  <b>}</b>
+</span><span><a class="LN" name="87">   87   </a>
+</span><span><a class="LN" name="88">   88   </a>  rtsiSetT(si, t + h*rt_ODE3_A[0]);
+</span><span><a class="LN" name="89">   89   </a>  rtsiSetdX(si, f1);
+</span><span><a class="LN" name="90">   90   </a>  <a href="#fcn_sl_drivepoint_step" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_sl_drivepoint_step');" target="_self"><font color="#1122aa">sl_drivepoint_step</font></a>();
+</span><span><a class="LN" name="91">   91   </a>  <a href="#fcn_sl_drivepoint_derivatives" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_sl_drivepoint_derivatives');" target="_self"><font color="#1122aa">sl_drivepoint_derivatives</font></a>();
+</span><span><a class="LN" name="92">   92   </a>
+</span><span><a class="LN" name="93">   93   </a>  <span class="CT">/* f(:,3) = feval(odefile, t + hA(2), y + f*hB(:,2), args(:)(*)); */</span>
+</span><span><a class="LN" name="94">   94   </a>  <span class="KW">for</span> (i = 0; i &lt;= 1; i++) <b>{</b>
+</span><span><a class="LN" name="95">   95   </a>    hB[i] = h * rt_ODE3_B[1][i];
+</span><span><a class="LN" name="96">   96   </a>  <b>}</b>
+</span><span><a class="LN" name="97">   97   </a>
+</span><span><a class="LN" name="98">   98   </a>  <span class="KW">for</span> (i = 0; i &lt; nXc; i++) <b>{</b>
+</span><span><a class="LN" name="99">   99   </a>    x[i] = y[i] + (f0[i]*hB[0] + f1[i]*hB[1]);
+</span><span><a class="LN" name="100">  100   </a>  <b>}</b>
+</span><span><a class="LN" name="101">  101   </a>
+</span><span><a class="LN" name="102">  102   </a>  rtsiSetT(si, t + h*rt_ODE3_A[1]);
+</span><span><a class="LN" name="103">  103   </a>  rtsiSetdX(si, f2);
+</span><span><a class="LN" name="104">  104   </a>  <a href="#fcn_sl_drivepoint_step" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_sl_drivepoint_step');" target="_self"><font color="#1122aa">sl_drivepoint_step</font></a>();
+</span><span><a class="LN" name="105">  105   </a>  <a href="#fcn_sl_drivepoint_derivatives" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_sl_drivepoint_derivatives');" target="_self"><font color="#1122aa">sl_drivepoint_derivatives</font></a>();
+</span><span><a class="LN" name="106">  106   </a>
+</span><span><a class="LN" name="107">  107   </a>  <span class="CT">/* tnew = t + hA(3);</span>
+</span><span><a class="LN" name="108">  108   </a><span class="CT">     ynew = y + f*hB(:,3); */</span>
+</span><span><a class="LN" name="109">  109   </a>  <span class="KW">for</span> (i = 0; i &lt;= 2; i++) <b>{</b>
+</span><span><a class="LN" name="110">  110   </a>    hB[i] = h * rt_ODE3_B[2][i];
+</span><span><a class="LN" name="111">  111   </a>  <b>}</b>
+</span><span><a class="LN" name="112">  112   </a>
+</span><span><a class="LN" name="113">  113   </a>  <span class="KW">for</span> (i = 0; i &lt; nXc; i++) <b>{</b>
+</span><span><a class="LN" name="114">  114   </a>    x[i] = y[i] + (f0[i]*hB[0] + f1[i]*hB[1] + f2[i]*hB[2]);
+</span><span><a class="LN" name="115">  115   </a>  <b>}</b>
+</span><span><a class="LN" name="116">  116   </a>
+</span><span><a class="LN" name="117">  117   </a>  rtsiSetT(si, tnew);
+</span><span><a class="LN" name="118">  118   </a>  rtsiSetSimTimeStep(si,MAJOR_TIME_STEP);
+</span><span><a class="LN" name="119">  119   </a><b>}</b>
+</span><span><a class="LN" name="120">  120   </a>
+</span><span><a class="LN" name="121">  121   </a>real_T <a name="fcn_rt_powd_snf">rt_powd_snf</a>(real_T u0, real_T u1)
+</span><span><a class="LN" name="122">  122   </a><b>{</b>
+</span><span><a class="LN" name="123">  123   </a>  real_T y;
+</span><span><a class="LN" name="124">  124   </a>  real_T tmp;
+</span><span><a class="LN" name="125">  125   </a>  real_T tmp_0;
+</span><span><a class="LN" name="126">  126   </a>  <span class="KW">if</span> (<a href="rt_nonfinite_c.html#fcn_rtIsNaN" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_rtIsNaN');" target="_self"><font color="#1122aa">rtIsNaN</font></a>(u0) || <a href="rt_nonfinite_c.html#fcn_rtIsNaN" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_rtIsNaN');" target="_self"><font color="#1122aa">rtIsNaN</font></a>(u1)) <b>{</b>
+</span><span><a class="LN" name="127">  127   </a>    y = (<a href="rt_nonfinite_c.html#var_rtNaN" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtNaN');" target="_self"><font color="#1122aa">rtNaN</font></a>);
+</span><span><a class="LN" name="128">  128   </a>  <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="129">  129   </a>    tmp = fabs(u0);
+</span><span><a class="LN" name="130">  130   </a>    tmp_0 = fabs(u1);
+</span><span><a class="LN" name="131">  131   </a>    <span class="KW">if</span> (<a href="rt_nonfinite_c.html#fcn_rtIsInf" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_rtIsInf');" target="_self"><font color="#1122aa">rtIsInf</font></a>(u1)) <b>{</b>
+</span><span><a class="LN" name="132">  132   </a>      <span class="KW">if</span> (tmp == 1.0) <b>{</b>
+</span><span><a class="LN" name="133">  133   </a>        y = (<a href="rt_nonfinite_c.html#var_rtNaN" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtNaN');" target="_self"><font color="#1122aa">rtNaN</font></a>);
+</span><span><a class="LN" name="134">  134   </a>      <b>}</b> <span class="KW">else</span> <span class="KW">if</span> (tmp &gt; 1.0) <b>{</b>
+</span><span><a class="LN" name="135">  135   </a>        <span class="KW">if</span> (u1 &gt; 0.0) <b>{</b>
+</span><span><a class="LN" name="136">  136   </a>          y = (<a href="rt_nonfinite_c.html#var_rtInf" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtInf');" target="_self"><font color="#1122aa">rtInf</font></a>);
+</span><span><a class="LN" name="137">  137   </a>        <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="138">  138   </a>          y = 0.0;
+</span><span><a class="LN" name="139">  139   </a>        <b>}</b>
+</span><span><a class="LN" name="140">  140   </a>      <b>}</b> <span class="KW">else</span> <span class="KW">if</span> (u1 &gt; 0.0) <b>{</b>
+</span><span><a class="LN" name="141">  141   </a>        y = 0.0;
+</span><span><a class="LN" name="142">  142   </a>      <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="143">  143   </a>        y = (<a href="rt_nonfinite_c.html#var_rtInf" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtInf');" target="_self"><font color="#1122aa">rtInf</font></a>);
+</span><span><a class="LN" name="144">  144   </a>      <b>}</b>
+</span><span><a class="LN" name="145">  145   </a>    <b>}</b> <span class="KW">else</span> <span class="KW">if</span> (tmp_0 == 0.0) <b>{</b>
+</span><span><a class="LN" name="146">  146   </a>      y = 1.0;
+</span><span><a class="LN" name="147">  147   </a>    <b>}</b> <span class="KW">else</span> <span class="KW">if</span> (tmp_0 == 1.0) <b>{</b>
+</span><span><a class="LN" name="148">  148   </a>      <span class="KW">if</span> (u1 &gt; 0.0) <b>{</b>
+</span><span><a class="LN" name="149">  149   </a>        y = u0;
+</span><span><a class="LN" name="150">  150   </a>      <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="151">  151   </a>        y = 1.0 / u0;
+</span><span><a class="LN" name="152">  152   </a>      <b>}</b>
+</span><span><a class="LN" name="153">  153   </a>    <b>}</b> <span class="KW">else</span> <span class="KW">if</span> (u1 == 2.0) <b>{</b>
+</span><span><a class="LN" name="154">  154   </a>      y = u0 * u0;
+</span><span><a class="LN" name="155">  155   </a>    <b>}</b> <span class="KW">else</span> <span class="KW">if</span> ((u1 == 0.5) &amp;&amp; (u0 &gt;= 0.0)) <b>{</b>
+</span><span><a class="LN" name="156">  156   </a>      y = sqrt(u0);
+</span><span><a class="LN" name="157">  157   </a>    <b>}</b> <span class="KW">else</span> <span class="KW">if</span> ((u0 &lt; 0.0) &amp;&amp; (u1 &gt; floor(u1))) <b>{</b>
+</span><span><a class="LN" name="158">  158   </a>      y = (<a href="rt_nonfinite_c.html#var_rtNaN" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtNaN');" target="_self"><font color="#1122aa">rtNaN</font></a>);
+</span><span><a class="LN" name="159">  159   </a>    <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="160">  160   </a>      y = pow(u0, u1);
+</span><span><a class="LN" name="161">  161   </a>    <b>}</b>
+</span><span><a class="LN" name="162">  162   </a>  <b>}</b>
+</span><span><a class="LN" name="163">  163   </a>
+</span><span><a class="LN" name="164">  164   </a>  <span class="KW">return</span> y;
+</span><span><a class="LN" name="165">  165   </a><b>}</b>
+</span><span><a class="LN" name="166">  166   </a>
+</span><span><a class="LN" name="167">  167   </a>real_T <a name="fcn_rt_atan2d_snf">rt_atan2d_snf</a>(real_T u0, real_T u1)
+</span><span><a class="LN" name="168">  168   </a><b>{</b>
+</span><span><a class="LN" name="169">  169   </a>  real_T y;
+</span><span><a class="LN" name="170">  170   </a>  int32_T u0_0;
+</span><span><a class="LN" name="171">  171   </a>  int32_T u1_0;
+</span><span><a class="LN" name="172">  172   </a>  <span class="KW">if</span> (<a href="rt_nonfinite_c.html#fcn_rtIsNaN" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_rtIsNaN');" target="_self"><font color="#1122aa">rtIsNaN</font></a>(u0) || <a href="rt_nonfinite_c.html#fcn_rtIsNaN" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_rtIsNaN');" target="_self"><font color="#1122aa">rtIsNaN</font></a>(u1)) <b>{</b>
+</span><span><a class="LN" name="173">  173   </a>    y = (<a href="rt_nonfinite_c.html#var_rtNaN" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtNaN');" target="_self"><font color="#1122aa">rtNaN</font></a>);
+</span><span><a class="LN" name="174">  174   </a>  <b>}</b> <span class="KW">else</span> <span class="KW">if</span> (<a href="rt_nonfinite_c.html#fcn_rtIsInf" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_rtIsInf');" target="_self"><font color="#1122aa">rtIsInf</font></a>(u0) &amp;&amp; <a href="rt_nonfinite_c.html#fcn_rtIsInf" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_rtIsInf');" target="_self"><font color="#1122aa">rtIsInf</font></a>(u1)) <b>{</b>
+</span><span><a class="LN" name="175">  175   </a>    <span class="KW">if</span> (u0 &gt; 0.0) <b>{</b>
+</span><span><a class="LN" name="176">  176   </a>      u0_0 = 1;
+</span><span><a class="LN" name="177">  177   </a>    <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="178">  178   </a>      u0_0 = -1;
+</span><span><a class="LN" name="179">  179   </a>    <b>}</b>
+</span><span><a class="LN" name="180">  180   </a>
+</span><span><a class="LN" name="181">  181   </a>    <span class="KW">if</span> (u1 &gt; 0.0) <b>{</b>
+</span><span><a class="LN" name="182">  182   </a>      u1_0 = 1;
+</span><span><a class="LN" name="183">  183   </a>    <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="184">  184   </a>      u1_0 = -1;
+</span><span><a class="LN" name="185">  185   </a>    <b>}</b>
+</span><span><a class="LN" name="186">  186   </a>
+</span><span><a class="LN" name="187">  187   </a>    y = atan2(u0_0, u1_0);
+</span><span><a class="LN" name="188">  188   </a>  <b>}</b> <span class="KW">else</span> <span class="KW">if</span> (u1 == 0.0) <b>{</b>
+</span><span><a class="LN" name="189">  189   </a>    <span class="KW">if</span> (u0 &gt; 0.0) <b>{</b>
+</span><span><a class="LN" name="190">  190   </a>      y = RT_PI / 2.0;
+</span><span><a class="LN" name="191">  191   </a>    <b>}</b> <span class="KW">else</span> <span class="KW">if</span> (u0 &lt; 0.0) <b>{</b>
+</span><span><a class="LN" name="192">  192   </a>      y = -(RT_PI / 2.0);
+</span><span><a class="LN" name="193">  193   </a>    <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="194">  194   </a>      y = 0.0;
+</span><span><a class="LN" name="195">  195   </a>    <b>}</b>
+</span><span><a class="LN" name="196">  196   </a>  <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="197">  197   </a>    y = atan2(u0, u1);
+</span><span><a class="LN" name="198">  198   </a>  <b>}</b>
+</span><span><a class="LN" name="199">  199   </a>
+</span><span><a class="LN" name="200">  200   </a>  <span class="KW">return</span> y;
+</span><span><a class="LN" name="201">  201   </a><b>}</b>
+</span><span><a class="LN" name="202">  202   </a>
+</span><span><a class="LN" name="203">  203   </a>real_T <a name="fcn_rt_roundd_snf">rt_roundd_snf</a>(real_T u)
+</span><span><a class="LN" name="204">  204   </a><b>{</b>
+</span><span><a class="LN" name="205">  205   </a>  real_T y;
+</span><span><a class="LN" name="206">  206   </a>  <span class="KW">if</span> (fabs(u) &lt; 4.503599627370496E+15) <b>{</b>
+</span><span><a class="LN" name="207">  207   </a>    <span class="KW">if</span> (u &gt;= 0.5) <b>{</b>
+</span><span><a class="LN" name="208">  208   </a>      y = floor(u + 0.5);
+</span><span><a class="LN" name="209">  209   </a>    <b>}</b> <span class="KW">else</span> <span class="KW">if</span> (u &gt; -0.5) <b>{</b>
+</span><span><a class="LN" name="210">  210   </a>      y = u * 0.0;
+</span><span><a class="LN" name="211">  211   </a>    <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="212">  212   </a>      y = ceil(u - 0.5);
+</span><span><a class="LN" name="213">  213   </a>    <b>}</b>
+</span><span><a class="LN" name="214">  214   </a>  <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="215">  215   </a>    y = u;
+</span><span><a class="LN" name="216">  216   </a>  <b>}</b>
+</span><span><a class="LN" name="217">  217   </a>
+</span><span><a class="LN" name="218">  218   </a>  <span class="KW">return</span> y;
+</span><span><a class="LN" name="219">  219   </a><b>}</b>
+</span><span><a class="LN" name="220">  220   </a>
+</span><span><a class="LN" name="221">  221   </a><span class="CT">/* Model step function */</span>
+</span><span><a class="LN" name="222">  222   </a><span class="DT">void</span> <a name="fcn_sl_drivepoint_step">sl_drivepoint_step</a>(<span class="DT">void</span>)
+</span><span><a class="LN" name="223">  223   </a><b>{</b>
+</span><span><a class="LN" name="224">  224   </a>  real_T deltaT;
+</span><span><a class="LN" name="225">  225   </a>  real_T riseValLimit;
+</span><span><a class="LN" name="226">  226   </a>  real_T rateLimiterRate;
+</span><span><a class="LN" name="227">  227   </a>  real_T rtb_Sum_idx_0;
+</span><span><a class="LN" name="228">  228   </a>  real_T rtb_Sum_idx_1;
+</span><span><a class="LN" name="229">  229   </a>  <span class="KW">if</span> (rtmIsMajorTimeStep(<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>)) <b>{</b>
+</span><span><a class="LN" name="230">  230   </a>    <span class="CT">/* set solver stop time */</span>
+</span><span><a class="LN" name="231">  231   </a>    <span class="KW">if</span> (!(<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;Timing.clockTick0+1)) <b>{</b>
+</span><span><a class="LN" name="232">  232   </a>      rtsiSetSolverStopTime(&amp;<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;solverInfo,
+</span><span><a class="LN" name="233">  233   </a>                            ((<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;Timing.clockTickH0 + 1) *
+</span><span><a class="LN" name="234">  234   </a>        <a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;Timing.stepSize0 * 4294967296.0));
+</span><span><a class="LN" name="235">  235   </a>    <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="236">  236   </a>      rtsiSetSolverStopTime(&amp;<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;solverInfo,
+</span><span><a class="LN" name="237">  237   </a>                            ((<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;Timing.clockTick0 + 1) *
+</span><span><a class="LN" name="238">  238   </a>        <a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;Timing.stepSize0 + <a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;Timing.clockTickH0 *
+</span><span><a class="LN" name="239">  239   </a>        <a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;Timing.stepSize0 * 4294967296.0));
+</span><span><a class="LN" name="240">  240   </a>    <b>}</b>
+</span><span><a class="LN" name="241">  241   </a>  <b>}</b>                                    <span class="CT">/* end MajorTimeStep */</span>
+</span><span><a class="LN" name="242">  242   </a>
+</span><span><a class="LN" name="243">  243   </a>  <span class="CT">/* Update absolute time of base rate at minor time step */</span>
+</span><span><a class="LN" name="244">  244   </a>  <span class="KW">if</span> (rtmIsMinorTimeStep(<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>)) <b>{</b>
+</span><span><a class="LN" name="245">  245   </a>    <a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;Timing.t[0] = rtsiGetT(&amp;<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;solverInfo);
+</span><span><a class="LN" name="246">  246   </a>  <b>}</b>
+</span><span><a class="LN" name="247">  247   </a>
+</span><span><a class="LN" name="248">  248   </a>  <span class="CT">/* Integrator: '&lt;S1&gt;/Integrator' */</span>
+</span><span><a class="LN" name="249">  249   </a>  <span class="KW">if</span> (rtmIsMajorTimeStep(<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>)) <b>{</b>
+</span><span><a class="LN" name="250">  250   </a>    ZCEventType zcEvent;
+</span><span><a class="LN" name="251">  251   </a>    zcEvent = <a href="rt_zcfcn_c.html#fcn_rt_ZCFcn" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_rt_ZCFcn');" target="_self"><font color="#1122aa">rt_ZCFcn</font></a>(ANY_ZERO_CROSSING,
+</span><span><a class="LN" name="252">  252   </a>                       &amp;<a href="#var_sl_drivepoint_PrevZCX" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_PrevZCX');" target="_self"><font color="#1122aa">sl_drivepoint_PrevZCX</font></a>.Integrator_Reset_ZCE,
+</span><span><a class="LN" name="253">  253   </a>                       <a href="sl_drivepoint_data_c.html#var_sl_drivepoint_P" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_P');" target="_self"><font color="#1122aa">sl_drivepoint_P</font></a>.Bicycle_handbrake);
+</span><span><a class="LN" name="254">  254   </a>
+</span><span><a class="LN" name="255">  255   </a>    <span class="CT">/* evaluate zero-crossings and the level of the reset signal */</span>
+</span><span><a class="LN" name="256">  256   </a>    <span class="KW">if</span> (zcEvent || <a href="sl_drivepoint_data_c.html#var_sl_drivepoint_P" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_P');" target="_self"><font color="#1122aa">sl_drivepoint_P</font></a>.Bicycle_handbrake != 0.0) <b>{</b>
+</span><span><a class="LN" name="257">  257   </a>      <a href="#var_sl_drivepoint_X" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_X');" target="_self"><font color="#1122aa">sl_drivepoint_X</font></a>.Integrator_CSTATE[0] = <a href="sl_drivepoint_data_c.html#var_sl_drivepoint_P" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_P');" target="_self"><font color="#1122aa">sl_drivepoint_P</font></a>.x0[0];
+</span><span><a class="LN" name="258">  258   </a>      <a href="#var_sl_drivepoint_X" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_X');" target="_self"><font color="#1122aa">sl_drivepoint_X</font></a>.Integrator_CSTATE[1] = <a href="sl_drivepoint_data_c.html#var_sl_drivepoint_P" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_P');" target="_self"><font color="#1122aa">sl_drivepoint_P</font></a>.x0[1];
+</span><span><a class="LN" name="259">  259   </a>      <a href="#var_sl_drivepoint_X" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_X');" target="_self"><font color="#1122aa">sl_drivepoint_X</font></a>.Integrator_CSTATE[2] = <a href="sl_drivepoint_data_c.html#var_sl_drivepoint_P" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_P');" target="_self"><font color="#1122aa">sl_drivepoint_P</font></a>.x0[2];
+</span><span><a class="LN" name="260">  260   </a>    <b>}</b>
+</span><span><a class="LN" name="261">  261   </a>  <b>}</b>
+</span><span><a class="LN" name="262">  262   </a>
+</span><span><a class="LN" name="263">  263   </a>  <a href="#var_sl_drivepoint_B" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_B');" target="_self"><font color="#1122aa">sl_drivepoint_B</font></a>.Integrator[0] = <a href="#var_sl_drivepoint_X" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_X');" target="_self"><font color="#1122aa">sl_drivepoint_X</font></a>.Integrator_CSTATE[0];
+</span><span><a class="LN" name="264">  264   </a>  <a href="#var_sl_drivepoint_B" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_B');" target="_self"><font color="#1122aa">sl_drivepoint_B</font></a>.Integrator[1] = <a href="#var_sl_drivepoint_X" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_X');" target="_self"><font color="#1122aa">sl_drivepoint_X</font></a>.Integrator_CSTATE[1];
+</span><span><a class="LN" name="265">  265   </a>  <a href="#var_sl_drivepoint_B" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_B');" target="_self"><font color="#1122aa">sl_drivepoint_B</font></a>.Integrator[2] = <a href="#var_sl_drivepoint_X" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_X');" target="_self"><font color="#1122aa">sl_drivepoint_X</font></a>.Integrator_CSTATE[2];
+</span><span><a class="LN" name="266">  266   </a>
+</span><span><a class="LN" name="267">  267   </a>  <span class="CT">/* Outport: '&lt;Root&gt;/xy' */</span>
+</span><span><a class="LN" name="268">  268   </a>  <a href="#var_sl_drivepoint_Y" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_Y');" target="_self"><font color="#1122aa">sl_drivepoint_Y</font></a>.xy[0] = <a href="#var_sl_drivepoint_B" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_B');" target="_self"><font color="#1122aa">sl_drivepoint_B</font></a>.Integrator[0];
+</span><span><a class="LN" name="269">  269   </a>  <a href="#var_sl_drivepoint_Y" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_Y');" target="_self"><font color="#1122aa">sl_drivepoint_Y</font></a>.xy[1] = <a href="#var_sl_drivepoint_B" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_B');" target="_self"><font color="#1122aa">sl_drivepoint_B</font></a>.Integrator[1];
+</span><span><a class="LN" name="270">  270   </a>
+</span><span><a class="LN" name="271">  271   </a>  <span class="CT">/* Outport: '&lt;Root&gt;/theta ' */</span>
+</span><span><a class="LN" name="272">  272   </a>  <a href="#var_sl_drivepoint_Y" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_Y');" target="_self"><font color="#1122aa">sl_drivepoint_Y</font></a>.theta = <a href="#var_sl_drivepoint_B" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_B');" target="_self"><font color="#1122aa">sl_drivepoint_B</font></a>.Integrator[2];
+</span><span><a class="LN" name="273">  273   </a>  <span class="KW">if</span> (rtmIsMajorTimeStep(<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>)) <b>{</b>
+</span><span><a class="LN" name="274">  274   </a>  <b>}</b>
+</span><span><a class="LN" name="275">  275   </a>
+</span><span><a class="LN" name="276">  276   </a>  <span class="CT">/* Sum: '&lt;Root&gt;/Sum' incorporates:</span>
+</span><span><a class="LN" name="277">  277   </a><span class="CT">   *  Constant: '&lt;Root&gt;/Goal'</span>
+</span><span><a class="LN" name="278">  278   </a><span class="CT">   */</span>
+</span><span><a class="LN" name="279">  279   </a>  rtb_Sum_idx_0 = <a href="sl_drivepoint_data_c.html#var_sl_drivepoint_P" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_P');" target="_self"><font color="#1122aa">sl_drivepoint_P</font></a>.xg[0] - <a href="#var_sl_drivepoint_B" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_B');" target="_self"><font color="#1122aa">sl_drivepoint_B</font></a>.Integrator[0];
+</span><span><a class="LN" name="280">  280   </a>  rtb_Sum_idx_1 = <a href="sl_drivepoint_data_c.html#var_sl_drivepoint_P" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_P');" target="_self"><font color="#1122aa">sl_drivepoint_P</font></a>.xg[1] - <a href="#var_sl_drivepoint_B" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_B');" target="_self"><font color="#1122aa">sl_drivepoint_B</font></a>.Integrator[1];
+</span><span><a class="LN" name="281">  281   </a>
+</span><span><a class="LN" name="282">  282   </a>  <span class="CT">/* Fcn: '&lt;Root&gt;/throttle' */</span>
+</span><span><a class="LN" name="283">  283   </a>  deltaT = <a href="#fcn_rt_powd_snf" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_rt_powd_snf');" target="_self"><font color="#1122aa">rt_powd_snf</font></a>(rtb_Sum_idx_0, 2.0) + <a href="#fcn_rt_powd_snf" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_rt_powd_snf');" target="_self"><font color="#1122aa">rt_powd_snf</font></a>(rtb_Sum_idx_1, 2.0);
+</span><span><a class="LN" name="284">  284   </a>  <span class="KW">if</span> (deltaT &lt; 0.0) <b>{</b>
+</span><span><a class="LN" name="285">  285   </a>    deltaT = -sqrt(-deltaT);
+</span><span><a class="LN" name="286">  286   </a>  <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="287">  287   </a>    deltaT = sqrt(deltaT);
+</span><span><a class="LN" name="288">  288   </a>  <b>}</b>
+</span><span><a class="LN" name="289">  289   </a>
+</span><span><a class="LN" name="290">  290   </a>  <span class="CT">/* End of Fcn: '&lt;Root&gt;/throttle' */</span>
+</span><span><a class="LN" name="291">  291   </a>
+</span><span><a class="LN" name="292">  292   </a>  <span class="CT">/* Gain: '&lt;Root&gt;/Gain' */</span>
+</span><span><a class="LN" name="293">  293   </a>  <a href="#var_sl_drivepoint_B" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_B');" target="_self"><font color="#1122aa">sl_drivepoint_B</font></a>.Gain = <a href="sl_drivepoint_data_c.html#var_sl_drivepoint_P" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_P');" target="_self"><font color="#1122aa">sl_drivepoint_P</font></a>.Gain_Gain * deltaT;
+</span><span><a class="LN" name="294">  294   </a>  <span class="KW">if</span> (rtmIsMajorTimeStep(<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>)) <b>{</b>
+</span><span><a class="LN" name="295">  295   </a>  <b>}</b>
+</span><span><a class="LN" name="296">  296   </a>
+</span><span><a class="LN" name="297">  297   </a>  <span class="CT">/* MATLAB Function: '&lt;Root&gt;/MATLAB Function' incorporates:</span>
+</span><span><a class="LN" name="298">  298   </a><span class="CT">   *  Fcn: '&lt;Root&gt;/steering'</span>
+</span><span><a class="LN" name="299">  299   </a><span class="CT">   */</span>
+</span><span><a class="LN" name="300">  300   </a>  <span class="CT">/* MATLAB Function 'MATLAB Function': '&lt;S2&gt;:1' */</span>
+</span><span><a class="LN" name="301">  301   </a>  <span class="CT">/* '&lt;S2&gt;:1:12' */</span>
+</span><span><a class="LN" name="302">  302   </a>  <span class="CT">/* '&lt;S2&gt;:1:16' */</span>
+</span><span><a class="LN" name="303">  303   </a>  rtb_Sum_idx_0 = ((<a href="#fcn_rt_atan2d_snf" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_rt_atan2d_snf');" target="_self"><font color="#1122aa">rt_atan2d_snf</font></a>(rtb_Sum_idx_1, rtb_Sum_idx_0) -
+</span><span><a class="LN" name="304">  304   </a>                    <a href="#var_sl_drivepoint_B" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_B');" target="_self"><font color="#1122aa">sl_drivepoint_B</font></a>.Integrator[2]) + 3.1415926535897931) /
+</span><span><a class="LN" name="305">  305   </a>    6.2831853071795862;
+</span><span><a class="LN" name="306">  306   </a>  <span class="KW">if</span> (fabs(rtb_Sum_idx_0 - <a href="#fcn_rt_roundd_snf" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_rt_roundd_snf');" target="_self"><font color="#1122aa">rt_roundd_snf</font></a>(rtb_Sum_idx_0)) &lt;=
+</span><span><a class="LN" name="307">  307   </a>      2.2204460492503131E-16 * fabs(rtb_Sum_idx_0)) <b>{</b>
+</span><span><a class="LN" name="308">  308   </a>    rtb_Sum_idx_0 = 0.0;
+</span><span><a class="LN" name="309">  309   </a>  <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="310">  310   </a>    rtb_Sum_idx_0 = (rtb_Sum_idx_0 - floor(rtb_Sum_idx_0)) * 6.2831853071795862;
+</span><span><a class="LN" name="311">  311   </a>  <b>}</b>
+</span><span><a class="LN" name="312">  312   </a>
+</span><span><a class="LN" name="313">  313   </a>  <span class="CT">/* Saturate: '&lt;S1&gt;/vel limit' */</span>
+</span><span><a class="LN" name="314">  314   </a>  <span class="KW">if</span> (<a href="#var_sl_drivepoint_B" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_B');" target="_self"><font color="#1122aa">sl_drivepoint_B</font></a>.Gain &gt; <a href="sl_drivepoint_data_c.html#var_sl_drivepoint_P" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_P');" target="_self"><font color="#1122aa">sl_drivepoint_P</font></a>.Bicycle_vlim) <b>{</b>
+</span><span><a class="LN" name="315">  315   </a>    rtb_Sum_idx_1 = <a href="sl_drivepoint_data_c.html#var_sl_drivepoint_P" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_P');" target="_self"><font color="#1122aa">sl_drivepoint_P</font></a>.Bicycle_vlim;
+</span><span><a class="LN" name="316">  316   </a>  <b>}</b> <span class="KW">else</span> <span class="KW">if</span> (<a href="#var_sl_drivepoint_B" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_B');" target="_self"><font color="#1122aa">sl_drivepoint_B</font></a>.Gain &lt; -<a href="sl_drivepoint_data_c.html#var_sl_drivepoint_P" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_P');" target="_self"><font color="#1122aa">sl_drivepoint_P</font></a>.Bicycle_vlim) <b>{</b>
+</span><span><a class="LN" name="317">  317   </a>    rtb_Sum_idx_1 = -<a href="sl_drivepoint_data_c.html#var_sl_drivepoint_P" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_P');" target="_self"><font color="#1122aa">sl_drivepoint_P</font></a>.Bicycle_vlim;
+</span><span><a class="LN" name="318">  318   </a>  <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="319">  319   </a>    rtb_Sum_idx_1 = <a href="#var_sl_drivepoint_B" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_B');" target="_self"><font color="#1122aa">sl_drivepoint_B</font></a>.Gain;
+</span><span><a class="LN" name="320">  320   </a>  <b>}</b>
+</span><span><a class="LN" name="321">  321   </a>
+</span><span><a class="LN" name="322">  322   </a>  <span class="CT">/* End of Saturate: '&lt;S1&gt;/vel limit' */</span>
+</span><span><a class="LN" name="323">  323   </a>
+</span><span><a class="LN" name="324">  324   </a>  <span class="CT">/* RateLimiter: '&lt;S1&gt;/acceleration limit' */</span>
+</span><span><a class="LN" name="325">  325   </a>  <span class="KW">if</span> (<a href="#var_sl_drivepoint_DW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_DW');" target="_self"><font color="#1122aa">sl_drivepoint_DW</font></a>.LastMajorTime == (<a href="rt_nonfinite_c.html#var_rtInf" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtInf');" target="_self"><font color="#1122aa">rtInf</font></a>)) <b>{</b>
+</span><span><a class="LN" name="326">  326   </a>    <a href="#var_sl_drivepoint_B" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_B');" target="_self"><font color="#1122aa">sl_drivepoint_B</font></a>.accelerationlimit = rtb_Sum_idx_1;
+</span><span><a class="LN" name="327">  327   </a>  <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="328">  328   </a>    deltaT = <a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;Timing.t[0] - <a href="#var_sl_drivepoint_DW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_DW');" target="_self"><font color="#1122aa">sl_drivepoint_DW</font></a>.LastMajorTime;
+</span><span><a class="LN" name="329">  329   </a>    riseValLimit = deltaT * <a href="sl_drivepoint_data_c.html#var_sl_drivepoint_P" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_P');" target="_self"><font color="#1122aa">sl_drivepoint_P</font></a>.Bicycle_accel;
+</span><span><a class="LN" name="330">  330   </a>    rateLimiterRate = rtb_Sum_idx_1 - <a href="#var_sl_drivepoint_DW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_DW');" target="_self"><font color="#1122aa">sl_drivepoint_DW</font></a>.PrevY;
+</span><span><a class="LN" name="331">  331   </a>    <span class="KW">if</span> (rateLimiterRate &gt; riseValLimit) <b>{</b>
+</span><span><a class="LN" name="332">  332   </a>      <a href="#var_sl_drivepoint_B" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_B');" target="_self"><font color="#1122aa">sl_drivepoint_B</font></a>.accelerationlimit = <a href="#var_sl_drivepoint_DW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_DW');" target="_self"><font color="#1122aa">sl_drivepoint_DW</font></a>.PrevY + riseValLimit;
+</span><span><a class="LN" name="333">  333   </a>    <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="334">  334   </a>      deltaT *= -<a href="sl_drivepoint_data_c.html#var_sl_drivepoint_P" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_P');" target="_self"><font color="#1122aa">sl_drivepoint_P</font></a>.Bicycle_accel;
+</span><span><a class="LN" name="335">  335   </a>      <span class="KW">if</span> (rateLimiterRate &lt; deltaT) <b>{</b>
+</span><span><a class="LN" name="336">  336   </a>        <a href="#var_sl_drivepoint_B" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_B');" target="_self"><font color="#1122aa">sl_drivepoint_B</font></a>.accelerationlimit = <a href="#var_sl_drivepoint_DW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_DW');" target="_self"><font color="#1122aa">sl_drivepoint_DW</font></a>.PrevY + deltaT;
+</span><span><a class="LN" name="337">  337   </a>      <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="338">  338   </a>        <a href="#var_sl_drivepoint_B" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_B');" target="_self"><font color="#1122aa">sl_drivepoint_B</font></a>.accelerationlimit = rtb_Sum_idx_1;
+</span><span><a class="LN" name="339">  339   </a>      <b>}</b>
+</span><span><a class="LN" name="340">  340   </a>    <b>}</b>
+</span><span><a class="LN" name="341">  341   </a>  <b>}</b>
+</span><span><a class="LN" name="342">  342   </a>
+</span><span><a class="LN" name="343">  343   </a>  <span class="CT">/* End of RateLimiter: '&lt;S1&gt;/acceleration limit' */</span>
+</span><span><a class="LN" name="344">  344   </a>
+</span><span><a class="LN" name="345">  345   </a>  <span class="CT">/* Product: '&lt;S1&gt;/Product' incorporates:</span>
+</span><span><a class="LN" name="346">  346   </a><span class="CT">   *  Trigonometry: '&lt;S1&gt;/Trigonometric Function'</span>
+</span><span><a class="LN" name="347">  347   </a><span class="CT">   *  Trigonometry: '&lt;S1&gt;/Trigonometric Function2'</span>
+</span><span><a class="LN" name="348">  348   </a><span class="CT">   */</span>
+</span><span><a class="LN" name="349">  349   </a>  <a href="#var_sl_drivepoint_B" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_B');" target="_self"><font color="#1122aa">sl_drivepoint_B</font></a>.Product[0] = cos(<a href="#var_sl_drivepoint_B" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_B');" target="_self"><font color="#1122aa">sl_drivepoint_B</font></a>.Integrator[2]) *
+</span><span><a class="LN" name="350">  350   </a>    <a href="#var_sl_drivepoint_B" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_B');" target="_self"><font color="#1122aa">sl_drivepoint_B</font></a>.accelerationlimit;
+</span><span><a class="LN" name="351">  351   </a>  <a href="#var_sl_drivepoint_B" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_B');" target="_self"><font color="#1122aa">sl_drivepoint_B</font></a>.Product[1] = sin(<a href="#var_sl_drivepoint_B" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_B');" target="_self"><font color="#1122aa">sl_drivepoint_B</font></a>.Integrator[2]) *
+</span><span><a class="LN" name="352">  352   </a>    <a href="#var_sl_drivepoint_B" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_B');" target="_self"><font color="#1122aa">sl_drivepoint_B</font></a>.accelerationlimit;
+</span><span><a class="LN" name="353">  353   </a>
+</span><span><a class="LN" name="354">  354   </a>  <span class="CT">/* Gain: '&lt;Root&gt;/Kh' incorporates:</span>
+</span><span><a class="LN" name="355">  355   </a><span class="CT">   *  MATLAB Function: '&lt;Root&gt;/MATLAB Function'</span>
+</span><span><a class="LN" name="356">  356   </a><span class="CT">   */</span>
+</span><span><a class="LN" name="357">  357   </a>  rtb_Sum_idx_0 = (rtb_Sum_idx_0 - 3.1415926535897931) * <a href="sl_drivepoint_data_c.html#var_sl_drivepoint_P" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_P');" target="_self"><font color="#1122aa">sl_drivepoint_P</font></a>.Kh_Gain;
+</span><span><a class="LN" name="358">  358   </a>
+</span><span><a class="LN" name="359">  359   </a>  <span class="CT">/* Saturate: '&lt;S1&gt;/steering angle limit' */</span>
+</span><span><a class="LN" name="360">  360   </a>  <span class="KW">if</span> (rtb_Sum_idx_0 &gt; <a href="sl_drivepoint_data_c.html#var_sl_drivepoint_P" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_P');" target="_self"><font color="#1122aa">sl_drivepoint_P</font></a>.Bicycle_alim) <b>{</b>
+</span><span><a class="LN" name="361">  361   </a>    rtb_Sum_idx_0 = <a href="sl_drivepoint_data_c.html#var_sl_drivepoint_P" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_P');" target="_self"><font color="#1122aa">sl_drivepoint_P</font></a>.Bicycle_alim;
+</span><span><a class="LN" name="362">  362   </a>  <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="363">  363   </a>    <span class="KW">if</span> (rtb_Sum_idx_0 &lt; -<a href="sl_drivepoint_data_c.html#var_sl_drivepoint_P" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_P');" target="_self"><font color="#1122aa">sl_drivepoint_P</font></a>.Bicycle_alim) <b>{</b>
+</span><span><a class="LN" name="364">  364   </a>      rtb_Sum_idx_0 = -<a href="sl_drivepoint_data_c.html#var_sl_drivepoint_P" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_P');" target="_self"><font color="#1122aa">sl_drivepoint_P</font></a>.Bicycle_alim;
+</span><span><a class="LN" name="365">  365   </a>    <b>}</b>
+</span><span><a class="LN" name="366">  366   </a>  <b>}</b>
+</span><span><a class="LN" name="367">  367   </a>
+</span><span><a class="LN" name="368">  368   </a>  <span class="CT">/* Product: '&lt;S1&gt;/Product' incorporates:</span>
+</span><span><a class="LN" name="369">  369   </a><span class="CT">   *  Fcn: '&lt;S1&gt;/Fcn'</span>
+</span><span><a class="LN" name="370">  370   </a><span class="CT">   *  Saturate: '&lt;S1&gt;/steering angle limit'</span>
+</span><span><a class="LN" name="371">  371   </a><span class="CT">   */</span>
+</span><span><a class="LN" name="372">  372   </a>  <a href="#var_sl_drivepoint_B" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_B');" target="_self"><font color="#1122aa">sl_drivepoint_B</font></a>.Product[2] = tan(rtb_Sum_idx_0) *
+</span><span><a class="LN" name="373">  373   </a>    <a href="#var_sl_drivepoint_B" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_B');" target="_self"><font color="#1122aa">sl_drivepoint_B</font></a>.accelerationlimit;
+</span><span><a class="LN" name="374">  374   </a>  <span class="KW">if</span> (rtmIsMajorTimeStep(<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>)) <b>{</b>
+</span><span><a class="LN" name="375">  375   </a>    <span class="CT">/* Matfile logging */</span>
+</span><span><a class="LN" name="376">  376   </a>    <a href="rt_logging_c.html#fcn_rt_UpdateTXYLogVars" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_rt_UpdateTXYLogVars');" target="_self"><font color="#1122aa">rt_UpdateTXYLogVars</font></a>(<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;rtwLogInfo, (<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;Timing.t));
+</span><span><a class="LN" name="377">  377   </a>  <b>}</b>                                    <span class="CT">/* end MajorTimeStep */</span>
+</span><span><a class="LN" name="378">  378   </a>
+</span><span><a class="LN" name="379">  379   </a>  <span class="KW">if</span> (rtmIsMajorTimeStep(<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>)) <b>{</b>
+</span><span><a class="LN" name="380">  380   </a>    <span class="CT">/* Update for RateLimiter: '&lt;S1&gt;/acceleration limit' */</span>
+</span><span><a class="LN" name="381">  381   </a>    <a href="#var_sl_drivepoint_DW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_DW');" target="_self"><font color="#1122aa">sl_drivepoint_DW</font></a>.PrevY = <a href="#var_sl_drivepoint_B" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_B');" target="_self"><font color="#1122aa">sl_drivepoint_B</font></a>.accelerationlimit;
+</span><span><a class="LN" name="382">  382   </a>    <a href="#var_sl_drivepoint_DW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_DW');" target="_self"><font color="#1122aa">sl_drivepoint_DW</font></a>.LastMajorTime = <a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;Timing.t[0];
+</span><span><a class="LN" name="383">  383   </a>  <b>}</b>                                    <span class="CT">/* end MajorTimeStep */</span>
+</span><span><a class="LN" name="384">  384   </a>
+</span><span><a class="LN" name="385">  385   </a>  <span class="KW">if</span> (rtmIsMajorTimeStep(<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>)) <b>{</b>
+</span><span><a class="LN" name="386">  386   </a>    <span class="CT">/* signal main to stop simulation */</span>
+</span><span><a class="LN" name="387">  387   </a>    <b>{</b>                                  <span class="CT">/* Sample time: [0.0s, 0.0s] */</span>
+</span><span><a class="LN" name="388">  388   </a>      <span class="KW">if</span> ((rtmGetTFinal(<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>)!=-1) &amp;&amp;
+</span><span><a class="LN" name="389">  389   </a>          !((rtmGetTFinal(<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>)-(((<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;Timing.clockTick1
+</span><span><a class="LN" name="390">  390   </a>               +<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;Timing.clockTickH1* 4294967296.0)) * 0.3)) &gt;
+</span><span><a class="LN" name="391">  391   </a>            (((<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;Timing.clockTick1+
+</span><span><a class="LN" name="392">  392   </a>               <a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;Timing.clockTickH1* 4294967296.0)) * 0.3) *
+</span><span><a class="LN" name="393">  393   </a>            (DBL_EPSILON))) <b>{</b>
+</span><span><a class="LN" name="394">  394   </a>        rtmSetErrorStatus(<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>, <font color="#1122ff">&quot;Simulation finished&quot;</font>);
+</span><span><a class="LN" name="395">  395   </a>      <b>}</b>
+</span><span><a class="LN" name="396">  396   </a>    <b>}</b>
+</span><span><a class="LN" name="397">  397   </a>
+</span><span><a class="LN" name="398">  398   </a>    <a href="#fcn_rt_ertODEUpdateContinuousStates" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_rt_ertODEUpdateContinuousStates');" target="_self"><font color="#1122aa">rt_ertODEUpdateContinuousStates</font></a>(&amp;<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;solverInfo);
+</span><span><a class="LN" name="399">  399   </a>
+</span><span><a class="LN" name="400">  400   </a>    <span class="CT">/* Update absolute time for base rate */</span>
+</span><span><a class="LN" name="401">  401   </a>    <span class="CT">/* The "clockTick0" counts the number of times the code of this task has</span>
+</span><span><a class="LN" name="402">  402   </a><span class="CT">     * been executed. The absolute time is the multiplication of "clockTick0"</span>
+</span><span><a class="LN" name="403">  403   </a><span class="CT">     * and "Timing.stepSize0". Size of "clockTick0" ensures timer will not</span>
+</span><span><a class="LN" name="404">  404   </a><span class="CT">     * overflow during the application lifespan selected.</span>
+</span><span><a class="LN" name="405">  405   </a><span class="CT">     * Timer of this task consists of two 32 bit unsigned integers.</span>
+</span><span><a class="LN" name="406">  406   </a><span class="CT">     * The two integers represent the low bits Timing.clockTick0 and the high bits</span>
+</span><span><a class="LN" name="407">  407   </a><span class="CT">     * Timing.clockTickH0. When the low bit overflows to 0, the high bits increment.</span>
+</span><span><a class="LN" name="408">  408   </a><span class="CT">     */</span>
+</span><span><a class="LN" name="409">  409   </a>    <span class="KW">if</span> (!(++<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;Timing.clockTick0)) <b>{</b>
+</span><span><a class="LN" name="410">  410   </a>      ++<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;Timing.clockTickH0;
+</span><span><a class="LN" name="411">  411   </a>    <b>}</b>
+</span><span><a class="LN" name="412">  412   </a>
+</span><span><a class="LN" name="413">  413   </a>    <a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;Timing.t[0] = rtsiGetSolverStopTime
+</span><span><a class="LN" name="414">  414   </a>      (&amp;<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;solverInfo);
+</span><span><a class="LN" name="415">  415   </a>
+</span><span><a class="LN" name="416">  416   </a>    <b>{</b>
+</span><span><a class="LN" name="417">  417   </a>      <span class="CT">/* Update absolute timer for sample time: [0.3s, 0.0s] */</span>
+</span><span><a class="LN" name="418">  418   </a>      <span class="CT">/* The "clockTick1" counts the number of times the code of this task has</span>
+</span><span><a class="LN" name="419">  419   </a><span class="CT">       * been executed. The resolution of this integer timer is 0.3, which is the step size</span>
+</span><span><a class="LN" name="420">  420   </a><span class="CT">       * of the task. Size of "clockTick1" ensures timer will not overflow during the</span>
+</span><span><a class="LN" name="421">  421   </a><span class="CT">       * application lifespan selected.</span>
+</span><span><a class="LN" name="422">  422   </a><span class="CT">       * Timer of this task consists of two 32 bit unsigned integers.</span>
+</span><span><a class="LN" name="423">  423   </a><span class="CT">       * The two integers represent the low bits Timing.clockTick1 and the high bits</span>
+</span><span><a class="LN" name="424">  424   </a><span class="CT">       * Timing.clockTickH1. When the low bit overflows to 0, the high bits increment.</span>
+</span><span><a class="LN" name="425">  425   </a><span class="CT">       */</span>
+</span><span><a class="LN" name="426">  426   </a>      <a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;Timing.clockTick1++;
+</span><span><a class="LN" name="427">  427   </a>      <span class="KW">if</span> (!<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;Timing.clockTick1) <b>{</b>
+</span><span><a class="LN" name="428">  428   </a>        <a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;Timing.clockTickH1++;
+</span><span><a class="LN" name="429">  429   </a>      <b>}</b>
+</span><span><a class="LN" name="430">  430   </a>    <b>}</b>
+</span><span><a class="LN" name="431">  431   </a>  <b>}</b>                                    <span class="CT">/* end MajorTimeStep */</span>
+</span><span><a class="LN" name="432">  432   </a><b>}</b>
+</span><span><a class="LN" name="433">  433   </a>
+</span><span><a class="LN" name="434">  434   </a><span class="CT">/* Derivatives for root system: '&lt;Root&gt;' */</span>
+</span><span><a class="LN" name="435">  435   </a><span class="DT">void</span> <a name="fcn_sl_drivepoint_derivatives">sl_drivepoint_derivatives</a>(<span class="DT">void</span>)
+</span><span><a class="LN" name="436">  436   </a><b>{</b>
+</span><span><a class="LN" name="437">  437   </a>  <span class="CT">/* Derivatives for Integrator: '&lt;S1&gt;/Integrator' */</span>
+</span><span><a class="LN" name="438">  438   </a>  <b>{</b>
+</span><span><a class="LN" name="439">  439   </a>    <span class="KW">if</span> (<a href="sl_drivepoint_data_c.html#var_sl_drivepoint_P" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_P');" target="_self"><font color="#1122aa">sl_drivepoint_P</font></a>.Bicycle_handbrake== 0.0) <b>{</b>
+</span><span><a class="LN" name="440">  440   </a>      ((<a href="sl_drivepoint_h.html#type_XDot_sl_drivepoint_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_XDot_sl_drivepoint_T');" target="_self"><font color="#1122aa">XDot_sl_drivepoint_T</font></a> *) <a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;ModelData.derivs)
+</span><span><a class="LN" name="441">  441   </a>        -&gt;Integrator_CSTATE[0] = <a href="#var_sl_drivepoint_B" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_B');" target="_self"><font color="#1122aa">sl_drivepoint_B</font></a>.Product[0];
+</span><span><a class="LN" name="442">  442   </a>    <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="443">  443   </a>      <span class="CT">/* level reset is active*/</span>
+</span><span><a class="LN" name="444">  444   </a>      ((<a href="sl_drivepoint_h.html#type_XDot_sl_drivepoint_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_XDot_sl_drivepoint_T');" target="_self"><font color="#1122aa">XDot_sl_drivepoint_T</font></a> *) <a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;ModelData.derivs)
+</span><span><a class="LN" name="445">  445   </a>        -&gt;Integrator_CSTATE[0] = 0.0;
+</span><span><a class="LN" name="446">  446   </a>    <b>}</b>
+</span><span><a class="LN" name="447">  447   </a>
+</span><span><a class="LN" name="448">  448   </a>    <span class="KW">if</span> (<a href="sl_drivepoint_data_c.html#var_sl_drivepoint_P" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_P');" target="_self"><font color="#1122aa">sl_drivepoint_P</font></a>.Bicycle_handbrake== 0.0) <b>{</b>
+</span><span><a class="LN" name="449">  449   </a>      ((<a href="sl_drivepoint_h.html#type_XDot_sl_drivepoint_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_XDot_sl_drivepoint_T');" target="_self"><font color="#1122aa">XDot_sl_drivepoint_T</font></a> *) <a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;ModelData.derivs)
+</span><span><a class="LN" name="450">  450   </a>        -&gt;Integrator_CSTATE[1] = <a href="#var_sl_drivepoint_B" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_B');" target="_self"><font color="#1122aa">sl_drivepoint_B</font></a>.Product[1];
+</span><span><a class="LN" name="451">  451   </a>    <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="452">  452   </a>      <span class="CT">/* level reset is active*/</span>
+</span><span><a class="LN" name="453">  453   </a>      ((<a href="sl_drivepoint_h.html#type_XDot_sl_drivepoint_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_XDot_sl_drivepoint_T');" target="_self"><font color="#1122aa">XDot_sl_drivepoint_T</font></a> *) <a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;ModelData.derivs)
+</span><span><a class="LN" name="454">  454   </a>        -&gt;Integrator_CSTATE[1] = 0.0;
+</span><span><a class="LN" name="455">  455   </a>    <b>}</b>
+</span><span><a class="LN" name="456">  456   </a>
+</span><span><a class="LN" name="457">  457   </a>    <span class="KW">if</span> (<a href="sl_drivepoint_data_c.html#var_sl_drivepoint_P" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_P');" target="_self"><font color="#1122aa">sl_drivepoint_P</font></a>.Bicycle_handbrake== 0.0) <b>{</b>
+</span><span><a class="LN" name="458">  458   </a>      ((<a href="sl_drivepoint_h.html#type_XDot_sl_drivepoint_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_XDot_sl_drivepoint_T');" target="_self"><font color="#1122aa">XDot_sl_drivepoint_T</font></a> *) <a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;ModelData.derivs)
+</span><span><a class="LN" name="459">  459   </a>        -&gt;Integrator_CSTATE[2] = <a href="#var_sl_drivepoint_B" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_B');" target="_self"><font color="#1122aa">sl_drivepoint_B</font></a>.Product[2];
+</span><span><a class="LN" name="460">  460   </a>    <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="461">  461   </a>      <span class="CT">/* level reset is active*/</span>
+</span><span><a class="LN" name="462">  462   </a>      ((<a href="sl_drivepoint_h.html#type_XDot_sl_drivepoint_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_XDot_sl_drivepoint_T');" target="_self"><font color="#1122aa">XDot_sl_drivepoint_T</font></a> *) <a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;ModelData.derivs)
+</span><span><a class="LN" name="463">  463   </a>        -&gt;Integrator_CSTATE[2] = 0.0;
+</span><span><a class="LN" name="464">  464   </a>    <b>}</b>
+</span><span><a class="LN" name="465">  465   </a>  <b>}</b>
+</span><span><a class="LN" name="466">  466   </a><b>}</b>
+</span><span><a class="LN" name="467">  467   </a>
+</span><span><a class="LN" name="468">  468   </a><span class="CT">/* Model initialize function */</span>
+</span><span><a class="LN" name="469">  469   </a><span class="DT">void</span> <a name="fcn_sl_drivepoint_initialize">sl_drivepoint_initialize</a>(<span class="DT">void</span>)
+</span><span><a class="LN" name="470">  470   </a><b>{</b>
+</span><span><a class="LN" name="471">  471   </a>  <span class="CT">/* Registration code */</span>
+</span><span><a class="LN" name="472">  472   </a>
+</span><span><a class="LN" name="473">  473   </a>  <span class="CT">/* initialize non-finites */</span>
+</span><span><a class="LN" name="474">  474   </a>  <a href="rt_nonfinite_c.html#fcn_rt_InitInfAndNaN" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_rt_InitInfAndNaN');" target="_self"><font color="#1122aa">rt_InitInfAndNaN</font></a>(<span class="KW">sizeof</span>(real_T));
+</span><span><a class="LN" name="475">  475   </a>
+</span><span><a class="LN" name="476">  476   </a>  <span class="CT">/* initialize real-time model */</span>
+</span><span><a class="LN" name="477">  477   </a>  (<span class="DT">void</span>) memset((<span class="DT">void</span> *)<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>, 0,
+</span><span><a class="LN" name="478">  478   </a>                <span class="KW">sizeof</span>(<a href="sl_drivepoint_types_h.html#type_RT_MODEL_sl_drivepoint_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_RT_MODEL_sl_drivepoint_T');" target="_self"><font color="#1122aa">RT_MODEL_sl_drivepoint_T</font></a>));
+</span><span><a class="LN" name="479">  479   </a>
+</span><span><a class="LN" name="480">  480   </a>  <b>{</b>
+</span><span><a class="LN" name="481">  481   </a>    <span class="CT">/* Setup solver object */</span>
+</span><span><a class="LN" name="482">  482   </a>    rtsiSetSimTimeStepPtr(&amp;<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;solverInfo,
+</span><span><a class="LN" name="483">  483   </a>                          &amp;<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;Timing.simTimeStep);
+</span><span><a class="LN" name="484">  484   </a>    rtsiSetTPtr(&amp;<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;solverInfo, &amp;rtmGetTPtr(<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>));
+</span><span><a class="LN" name="485">  485   </a>    rtsiSetStepSizePtr(&amp;<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;solverInfo,
+</span><span><a class="LN" name="486">  486   </a>                       &amp;<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;Timing.stepSize0);
+</span><span><a class="LN" name="487">  487   </a>    rtsiSetdXPtr(&amp;<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;solverInfo,
+</span><span><a class="LN" name="488">  488   </a>                 &amp;<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;ModelData.derivs);
+</span><span><a class="LN" name="489">  489   </a>    rtsiSetContStatesPtr(&amp;<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;solverInfo, (real_T **)
+</span><span><a class="LN" name="490">  490   </a>                         &amp;<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;ModelData.contStates);
+</span><span><a class="LN" name="491">  491   </a>    rtsiSetNumContStatesPtr(&amp;<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;solverInfo,
+</span><span><a class="LN" name="492">  492   </a>      &amp;<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;Sizes.numContStates);
+</span><span><a class="LN" name="493">  493   </a>    rtsiSetErrorStatusPtr(&amp;<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;solverInfo, (&amp;rtmGetErrorStatus
+</span><span><a class="LN" name="494">  494   </a>      (<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>)));
+</span><span><a class="LN" name="495">  495   </a>    rtsiSetRTModelPtr(&amp;<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;solverInfo, <a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>);
+</span><span><a class="LN" name="496">  496   </a>  <b>}</b>
+</span><span><a class="LN" name="497">  497   </a>
+</span><span><a class="LN" name="498">  498   </a>  rtsiSetSimTimeStep(&amp;<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;solverInfo, MAJOR_TIME_STEP);
+</span><span><a class="LN" name="499">  499   </a>  <a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;ModelData.intgData.y = <a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;ModelData.odeY;
+</span><span><a class="LN" name="500">  500   </a>  <a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;ModelData.intgData.f[0] = <a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;ModelData.odeF[0];
+</span><span><a class="LN" name="501">  501   </a>  <a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;ModelData.intgData.f[1] = <a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;ModelData.odeF[1];
+</span><span><a class="LN" name="502">  502   </a>  <a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;ModelData.intgData.f[2] = <a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;ModelData.odeF[2];
+</span><span><a class="LN" name="503">  503   </a>  <a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;ModelData.contStates = ((<a href="sl_drivepoint_h.html#type_X_sl_drivepoint_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_X_sl_drivepoint_T');" target="_self"><font color="#1122aa">X_sl_drivepoint_T</font></a> *)
+</span><span><a class="LN" name="504">  504   </a>    &amp;<a href="#var_sl_drivepoint_X" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_X');" target="_self"><font color="#1122aa">sl_drivepoint_X</font></a>);
+</span><span><a class="LN" name="505">  505   </a>  rtsiSetSolverData(&amp;<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;solverInfo, (<span class="DT">void</span> *)
+</span><span><a class="LN" name="506">  506   </a>                    &amp;<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;ModelData.intgData);
+</span><span><a class="LN" name="507">  507   </a>  rtsiSetSolverName(&amp;<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;solverInfo,<font color="#1122ff">&quot;ode3&quot;</font>);
+</span><span><a class="LN" name="508">  508   </a>  rtmSetTPtr(<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>, &amp;<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;Timing.tArray[0]);
+</span><span><a class="LN" name="509">  509   </a>  rtmSetTFinal(<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>, 15.0);
+</span><span><a class="LN" name="510">  510   </a>  <a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;Timing.stepSize0 = 0.3;
+</span><span><a class="LN" name="511">  511   </a>
+</span><span><a class="LN" name="512">  512   </a>  <span class="CT">/* Setup for data logging */</span>
+</span><span><a class="LN" name="513">  513   </a>  <b>{</b>
+</span><span><a class="LN" name="514">  514   </a>    <span class="DT">static</span> RTWLogInfo rt_DataLoggingInfo;
+</span><span><a class="LN" name="515">  515   </a>    <a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;rtwLogInfo = &amp;rt_DataLoggingInfo;
+</span><span><a class="LN" name="516">  516   </a>  <b>}</b>
+</span><span><a class="LN" name="517">  517   </a>
+</span><span><a class="LN" name="518">  518   </a>  <span class="CT">/* Setup for data logging */</span>
+</span><span><a class="LN" name="519">  519   </a>  <b>{</b>
+</span><span><a class="LN" name="520">  520   </a>    rtliSetLogXSignalInfo(<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;rtwLogInfo, (NULL));
+</span><span><a class="LN" name="521">  521   </a>    rtliSetLogXSignalPtrs(<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;rtwLogInfo, (NULL));
+</span><span><a class="LN" name="522">  522   </a>    rtliSetLogT(<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;rtwLogInfo, <font color="#1122ff">&quot;tout&quot;</font>);
+</span><span><a class="LN" name="523">  523   </a>    rtliSetLogX(<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;rtwLogInfo, <font color="#1122ff">&quot;&quot;</font>);
+</span><span><a class="LN" name="524">  524   </a>    rtliSetLogXFinal(<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;rtwLogInfo, <font color="#1122ff">&quot;&quot;</font>);
+</span><span><a class="LN" name="525">  525   </a>    rtliSetLogVarNameModifier(<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;rtwLogInfo, <font color="#1122ff">&quot;none&quot;</font>);
+</span><span><a class="LN" name="526">  526   </a>    rtliSetLogFormat(<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;rtwLogInfo, 0);
+</span><span><a class="LN" name="527">  527   </a>    rtliSetLogMaxRows(<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;rtwLogInfo, 0);
+</span><span><a class="LN" name="528">  528   </a>    rtliSetLogDecimation(<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;rtwLogInfo, 1);
+</span><span><a class="LN" name="529">  529   </a>
+</span><span><a class="LN" name="530">  530   </a>    <span class="CT">/*</span>
+</span><span><a class="LN" name="531">  531   </a><span class="CT">     * Set pointers to the data and signal info for each output</span>
+</span><span><a class="LN" name="532">  532   </a><span class="CT">     */</span>
+</span><span><a class="LN" name="533">  533   </a>    <b>{</b>
+</span><span><a class="LN" name="534">  534   </a>      <span class="DT">static</span> <span class="DT">void</span> * rt_LoggedOutputSignalPtrs[] = <b>{</b>
+</span><span><a class="LN" name="535">  535   </a>        &amp;<a href="#var_sl_drivepoint_Y" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_Y');" target="_self"><font color="#1122aa">sl_drivepoint_Y</font></a>.xy[0],
+</span><span><a class="LN" name="536">  536   </a>        &amp;<a href="#var_sl_drivepoint_Y" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_Y');" target="_self"><font color="#1122aa">sl_drivepoint_Y</font></a>.theta
+</span><span><a class="LN" name="537">  537   </a>      <b>}</b>;
+</span><span><a class="LN" name="538">  538   </a>
+</span><span><a class="LN" name="539">  539   </a>      rtliSetLogYSignalPtrs(<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;rtwLogInfo, ((LogSignalPtrsType)
+</span><span><a class="LN" name="540">  540   </a>        rt_LoggedOutputSignalPtrs));
+</span><span><a class="LN" name="541">  541   </a>    <b>}</b>
+</span><span><a class="LN" name="542">  542   </a>
+</span><span><a class="LN" name="543">  543   </a>    <b>{</b>
+</span><span><a class="LN" name="544">  544   </a>      <span class="DT">static</span> int_T rt_LoggedOutputWidths[] = <b>{</b>
+</span><span><a class="LN" name="545">  545   </a>        2,
+</span><span><a class="LN" name="546">  546   </a>        1
+</span><span><a class="LN" name="547">  547   </a>      <b>}</b>;
+</span><span><a class="LN" name="548">  548   </a>
+</span><span><a class="LN" name="549">  549   </a>      <span class="DT">static</span> int_T rt_LoggedOutputNumDimensions[] = <b>{</b>
+</span><span><a class="LN" name="550">  550   </a>        1,
+</span><span><a class="LN" name="551">  551   </a>        1
+</span><span><a class="LN" name="552">  552   </a>      <b>}</b>;
+</span><span><a class="LN" name="553">  553   </a>
+</span><span><a class="LN" name="554">  554   </a>      <span class="DT">static</span> int_T rt_LoggedOutputDimensions[] = <b>{</b>
+</span><span><a class="LN" name="555">  555   </a>        2,
+</span><span><a class="LN" name="556">  556   </a>        1
+</span><span><a class="LN" name="557">  557   </a>      <b>}</b>;
+</span><span><a class="LN" name="558">  558   </a>
+</span><span><a class="LN" name="559">  559   </a>      <span class="DT">static</span> boolean_T rt_LoggedOutputIsVarDims[] = <b>{</b>
+</span><span><a class="LN" name="560">  560   </a>        0,
+</span><span><a class="LN" name="561">  561   </a>        0
+</span><span><a class="LN" name="562">  562   </a>      <b>}</b>;
+</span><span><a class="LN" name="563">  563   </a>
+</span><span><a class="LN" name="564">  564   </a>      <span class="DT">static</span> <span class="DT">void</span>* rt_LoggedCurrentSignalDimensions[] = <b>{</b>
+</span><span><a class="LN" name="565">  565   </a>        (NULL),
+</span><span><a class="LN" name="566">  566   </a>        (NULL)
+</span><span><a class="LN" name="567">  567   </a>      <b>}</b>;
+</span><span><a class="LN" name="568">  568   </a>
+</span><span><a class="LN" name="569">  569   </a>      <span class="DT">static</span> int_T rt_LoggedCurrentSignalDimensionsSize[] = <b>{</b>
+</span><span><a class="LN" name="570">  570   </a>        4,
+</span><span><a class="LN" name="571">  571   </a>        4
+</span><span><a class="LN" name="572">  572   </a>      <b>}</b>;
+</span><span><a class="LN" name="573">  573   </a>
+</span><span><a class="LN" name="574">  574   </a>      <span class="DT">static</span> <a href="builtin_typeid_types_h.html#type_BuiltInDTypeId" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_BuiltInDTypeId');" target="_self"><font color="#1122aa">BuiltInDTypeId</font></a> rt_LoggedOutputDataTypeIds[] = <b>{</b>
+</span><span><a class="LN" name="575">  575   </a>        SS_DOUBLE,
+</span><span><a class="LN" name="576">  576   </a>        SS_DOUBLE
+</span><span><a class="LN" name="577">  577   </a>      <b>}</b>;
+</span><span><a class="LN" name="578">  578   </a>
+</span><span><a class="LN" name="579">  579   </a>      <span class="DT">static</span> int_T rt_LoggedOutputComplexSignals[] = <b>{</b>
+</span><span><a class="LN" name="580">  580   </a>        0,
+</span><span><a class="LN" name="581">  581   </a>        0
+</span><span><a class="LN" name="582">  582   </a>      <b>}</b>;
+</span><span><a class="LN" name="583">  583   </a>
+</span><span><a class="LN" name="584">  584   </a>      <span class="DT">static</span> <span class="DT">const</span> char_T *rt_LoggedOutputLabels[] = <b>{</b>
+</span><span><a class="LN" name="585">  585   </a>        <font color="#1122ff">&quot;&quot;</font>,
+</span><span><a class="LN" name="586">  586   </a>        <font color="#1122ff">&quot;theta&quot;</font> <b>}</b>;
+</span><span><a class="LN" name="587">  587   </a>
+</span><span><a class="LN" name="588">  588   </a>      <span class="DT">static</span> <span class="DT">const</span> char_T *rt_LoggedOutputBlockNames[] = <b>{</b>
+</span><span><a class="LN" name="589">  589   </a>        <font color="#1122ff">&quot;sl_drivepoint/xy&quot;</font>,
+</span><span><a class="LN" name="590">  590   </a>        <font color="#1122ff">&quot;sl_drivepoint/theta &quot;</font> <b>}</b>;
+</span><span><a class="LN" name="591">  591   </a>
+</span><span><a class="LN" name="592">  592   </a>      <span class="DT">static</span> RTWLogDataTypeConvert rt_RTWLogDataTypeConvert[] = <b>{</b>
+</span><span><a class="LN" name="593">  593   </a>        <b>{</b> 0, SS_DOUBLE, SS_DOUBLE, 0, 0, 0, 1.0, 0, 0.0 <b>}</b>,
+</span><span><a class="LN" name="594">  594   </a>
+</span><span><a class="LN" name="595">  595   </a>        <b>{</b> 0, SS_DOUBLE, SS_DOUBLE, 0, 0, 0, 1.0, 0, 0.0 <b>}</b>
+</span><span><a class="LN" name="596">  596   </a>      <b>}</b>;
+</span><span><a class="LN" name="597">  597   </a>
+</span><span><a class="LN" name="598">  598   </a>      <span class="DT">static</span> RTWLogSignalInfo rt_LoggedOutputSignalInfo[] = <b>{</b>
+</span><span><a class="LN" name="599">  599   </a>        <b>{</b>
+</span><span><a class="LN" name="600">  600   </a>          2,
+</span><span><a class="LN" name="601">  601   </a>          rt_LoggedOutputWidths,
+</span><span><a class="LN" name="602">  602   </a>          rt_LoggedOutputNumDimensions,
+</span><span><a class="LN" name="603">  603   </a>          rt_LoggedOutputDimensions,
+</span><span><a class="LN" name="604">  604   </a>          rt_LoggedOutputIsVarDims,
+</span><span><a class="LN" name="605">  605   </a>          rt_LoggedCurrentSignalDimensions,
+</span><span><a class="LN" name="606">  606   </a>          rt_LoggedCurrentSignalDimensionsSize,
+</span><span><a class="LN" name="607">  607   </a>          rt_LoggedOutputDataTypeIds,
+</span><span><a class="LN" name="608">  608   </a>          rt_LoggedOutputComplexSignals,
+</span><span><a class="LN" name="609">  609   </a>          (NULL),
+</span><span><a class="LN" name="610">  610   </a>
+</span><span><a class="LN" name="611">  611   </a>          <b>{</b> rt_LoggedOutputLabels <b>}</b>,
+</span><span><a class="LN" name="612">  612   </a>          (NULL),
+</span><span><a class="LN" name="613">  613   </a>          (NULL),
+</span><span><a class="LN" name="614">  614   </a>          (NULL),
+</span><span><a class="LN" name="615">  615   </a>
+</span><span><a class="LN" name="616">  616   </a>          <b>{</b> rt_LoggedOutputBlockNames <b>}</b>,
+</span><span><a class="LN" name="617">  617   </a>
+</span><span><a class="LN" name="618">  618   </a>          <b>{</b> (NULL) <b>}</b>,
+</span><span><a class="LN" name="619">  619   </a>          (NULL),
+</span><span><a class="LN" name="620">  620   </a>          rt_RTWLogDataTypeConvert
+</span><span><a class="LN" name="621">  621   </a>        <b>}</b>
+</span><span><a class="LN" name="622">  622   </a>      <b>}</b>;
+</span><span><a class="LN" name="623">  623   </a>
+</span><span><a class="LN" name="624">  624   </a>      rtliSetLogYSignalInfo(<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;rtwLogInfo,
+</span><span><a class="LN" name="625">  625   </a>                            rt_LoggedOutputSignalInfo);
+</span><span><a class="LN" name="626">  626   </a>
+</span><span><a class="LN" name="627">  627   </a>      <span class="CT">/* set currSigDims field */</span>
+</span><span><a class="LN" name="628">  628   </a>      rt_LoggedCurrentSignalDimensions[0] = &amp;rt_LoggedOutputWidths[0];
+</span><span><a class="LN" name="629">  629   </a>      rt_LoggedCurrentSignalDimensions[1] = &amp;rt_LoggedOutputWidths[1];
+</span><span><a class="LN" name="630">  630   </a>    <b>}</b>
+</span><span><a class="LN" name="631">  631   </a>
+</span><span><a class="LN" name="632">  632   </a>    rtliSetLogY(<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;rtwLogInfo, <font color="#1122ff">&quot;yout&quot;</font>);
+</span><span><a class="LN" name="633">  633   </a>  <b>}</b>
+</span><span><a class="LN" name="634">  634   </a>
+</span><span><a class="LN" name="635">  635   </a>  <span class="CT">/* block I/O */</span>
+</span><span><a class="LN" name="636">  636   </a>  (<span class="DT">void</span>) memset(((<span class="DT">void</span> *) &amp;<a href="#var_sl_drivepoint_B" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_B');" target="_self"><font color="#1122aa">sl_drivepoint_B</font></a>), 0,
+</span><span><a class="LN" name="637">  637   </a>                <span class="KW">sizeof</span>(<a href="sl_drivepoint_h.html#type_B_sl_drivepoint_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_B_sl_drivepoint_T');" target="_self"><font color="#1122aa">B_sl_drivepoint_T</font></a>));
+</span><span><a class="LN" name="638">  638   </a>
+</span><span><a class="LN" name="639">  639   </a>  <span class="CT">/* states (continuous) */</span>
+</span><span><a class="LN" name="640">  640   </a>  <b>{</b>
+</span><span><a class="LN" name="641">  641   </a>    (<span class="DT">void</span>) memset((<span class="DT">void</span> *)&amp;<a href="#var_sl_drivepoint_X" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_X');" target="_self"><font color="#1122aa">sl_drivepoint_X</font></a>, 0,
+</span><span><a class="LN" name="642">  642   </a>                  <span class="KW">sizeof</span>(<a href="sl_drivepoint_h.html#type_X_sl_drivepoint_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_X_sl_drivepoint_T');" target="_self"><font color="#1122aa">X_sl_drivepoint_T</font></a>));
+</span><span><a class="LN" name="643">  643   </a>  <b>}</b>
+</span><span><a class="LN" name="644">  644   </a>
+</span><span><a class="LN" name="645">  645   </a>  <span class="CT">/* states (dwork) */</span>
+</span><span><a class="LN" name="646">  646   </a>  (<span class="DT">void</span>) memset((<span class="DT">void</span> *)&amp;<a href="#var_sl_drivepoint_DW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_DW');" target="_self"><font color="#1122aa">sl_drivepoint_DW</font></a>, 0,
+</span><span><a class="LN" name="647">  647   </a>                <span class="KW">sizeof</span>(<a href="sl_drivepoint_h.html#type_DW_sl_drivepoint_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_DW_sl_drivepoint_T');" target="_self"><font color="#1122aa">DW_sl_drivepoint_T</font></a>));
+</span><span><a class="LN" name="648">  648   </a>
+</span><span><a class="LN" name="649">  649   </a>  <span class="CT">/* external outputs */</span>
+</span><span><a class="LN" name="650">  650   </a>  (<span class="DT">void</span>) memset((<span class="DT">void</span> *)&amp;<a href="#var_sl_drivepoint_Y" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_Y');" target="_self"><font color="#1122aa">sl_drivepoint_Y</font></a>, 0,
+</span><span><a class="LN" name="651">  651   </a>                <span class="KW">sizeof</span>(<a href="sl_drivepoint_h.html#type_ExtY_sl_drivepoint_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_ExtY_sl_drivepoint_T');" target="_self"><font color="#1122aa">ExtY_sl_drivepoint_T</font></a>));
+</span><span><a class="LN" name="652">  652   </a>
+</span><span><a class="LN" name="653">  653   </a>  <span class="CT">/* Initialize DataMapInfo substructure containing ModelMap for C API */</span>
+</span><span><a class="LN" name="654">  654   </a>  <a href="sl_drivepoint_capi_c.html#fcn_sl_drivepoint_InitializeDataMapInfo" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_sl_drivepoint_InitializeDataMapInfo');" target="_self"><font color="#1122aa">sl_drivepoint_InitializeDataMapInfo</font></a>(<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>);
+</span><span><a class="LN" name="655">  655   </a>
+</span><span><a class="LN" name="656">  656   </a>  <span class="CT">/* Matfile logging */</span>
+</span><span><a class="LN" name="657">  657   </a>  <a href="rt_logging_c.html#fcn_rt_StartDataLoggingWithStartTime" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_rt_StartDataLoggingWithStartTime');" target="_self"><font color="#1122aa">rt_StartDataLoggingWithStartTime</font></a>(<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;rtwLogInfo, 0.0,
+</span><span><a class="LN" name="658">  658   </a>    rtmGetTFinal(<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>), <a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>-&gt;Timing.stepSize0,
+</span><span><a class="LN" name="659">  659   </a>    (&amp;rtmGetErrorStatus(<a href="#var_sl_drivepoint_M" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_M');" target="_self"><font color="#1122aa">sl_drivepoint_M</font></a>)));
+</span><span><a class="LN" name="660">  660   </a>  <a href="#var_sl_drivepoint_PrevZCX" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_PrevZCX');" target="_self"><font color="#1122aa">sl_drivepoint_PrevZCX</font></a>.Integrator_Reset_ZCE = UNINITIALIZED_ZCSIG;
+</span><span><a class="LN" name="661">  661   </a>
+</span><span><a class="LN" name="662">  662   </a>  <span class="CT">/* InitializeConditions for Integrator: '&lt;S1&gt;/Integrator' */</span>
+</span><span><a class="LN" name="663">  663   </a>  <a href="#var_sl_drivepoint_X" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_X');" target="_self"><font color="#1122aa">sl_drivepoint_X</font></a>.Integrator_CSTATE[0] = <a href="sl_drivepoint_data_c.html#var_sl_drivepoint_P" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_P');" target="_self"><font color="#1122aa">sl_drivepoint_P</font></a>.x0[0];
+</span><span><a class="LN" name="664">  664   </a>  <a href="#var_sl_drivepoint_X" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_X');" target="_self"><font color="#1122aa">sl_drivepoint_X</font></a>.Integrator_CSTATE[1] = <a href="sl_drivepoint_data_c.html#var_sl_drivepoint_P" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_P');" target="_self"><font color="#1122aa">sl_drivepoint_P</font></a>.x0[1];
+</span><span><a class="LN" name="665">  665   </a>  <a href="#var_sl_drivepoint_X" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_X');" target="_self"><font color="#1122aa">sl_drivepoint_X</font></a>.Integrator_CSTATE[2] = <a href="sl_drivepoint_data_c.html#var_sl_drivepoint_P" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_P');" target="_self"><font color="#1122aa">sl_drivepoint_P</font></a>.x0[2];
+</span><span><a class="LN" name="666">  666   </a>
+</span><span><a class="LN" name="667">  667   </a>  <span class="CT">/* InitializeConditions for RateLimiter: '&lt;S1&gt;/acceleration limit' */</span>
+</span><span><a class="LN" name="668">  668   </a>  <a href="#var_sl_drivepoint_DW" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_sl_drivepoint_DW');" target="_self"><font color="#1122aa">sl_drivepoint_DW</font></a>.LastMajorTime = (<a href="rt_nonfinite_c.html#var_rtInf" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'var_rtInf');" target="_self"><font color="#1122aa">rtInf</font></a>);
+</span><span><a class="LN" name="669">  669   </a><b>}</b>
+</span><span><a class="LN" name="670">  670   </a>
+</span><span><a class="LN" name="671">  671   </a><span class="CT">/* Model terminate function */</span>
+</span><span><a class="LN" name="672">  672   </a><span class="DT">void</span> <a name="fcn_sl_drivepoint_terminate">sl_drivepoint_terminate</a>(<span class="DT">void</span>)
+</span><span><a class="LN" name="673">  673   </a><b>{</b>
+</span><span><a class="LN" name="674">  674   </a>  <span class="CT">/* (no terminate code required) */</span>
+</span><span><a class="LN" name="675">  675   </a><b>}</b>
+</span><span><a class="LN" name="676">  676   </a>
+</span></pre>
+</td></tr></table>
+</p>
+</body>
+</html>
