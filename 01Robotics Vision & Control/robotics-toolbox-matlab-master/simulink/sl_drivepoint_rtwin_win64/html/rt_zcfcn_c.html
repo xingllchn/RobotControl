@@ -1,0 +1,111 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>RTW Report - rt_zcfcn.c</title>
+<style> .LN { font-style: italic; color: #888888 } </style>
+<style> .CT { font-style: italic; color: #117755 } </style>
+<style> .PP { font-style: bold;   color: #992211 } </style>
+<style> .KW { font-style: bold;   color: #112266 } </style>
+<style> .DT { font-style: bold;   color: #112266 } </style>
+<link rel="stylesheet" type="text/css" href="rtwreport.css"></link><script language="JavaScript" type="text/javascript" src="rtwreport_utils.js"></script>
+<SCRIPT type="text/javascript" src="rtwannotate.js"></SCRIPT>
+</head>
+<body bgcolor="#eeeeee" text="#1122aa" onload="try {if (top) { if (top.rtwFileOnLoad) top.rtwFileOnLoad(window.document); else local_onload();}} catch(err) {};if (typeof rtwannotate === 'function') {rtwannotate('rt_zcfcn_c_cov.xml');}">
+<p>
+<table border="0" cellspacing="0" cellpadding="6" width="100%%" height="100%%"><tr><td width="100%%" valign="top" bgcolor="#ffffff">
+<h4>File: <a href="../rt_zcfcn.c" target="rtwreport_document_frame" id="linkToText_plain">rt_zcfcn.c</a></h4>
+<pre id="RTWcode">
+<span><a class="LN" name="1">    1   </a><span class="CT">/*</span>
+</span><span><a class="LN" name="2">    2   </a><span class="CT"> * rt_zcfcn.c</span>
+</span><span><a class="LN" name="3">    3   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="4">    4   </a><span class="CT"> * Code generation for model "sl_drivepoint".</span>
+</span><span><a class="LN" name="5">    5   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="6">    6   </a><span class="CT"> * Model version              : 1.26</span>
+</span><span><a class="LN" name="7">    7   </a><span class="CT"> * Simulink Coder version : 8.6 (R2014a) 27-Dec-2013</span>
+</span><span><a class="LN" name="8">    8   </a><span class="CT"> * C source code generated on : Sun Mar 11 13:15:59 2018</span>
+</span><span><a class="LN" name="9">    9   </a><span class="CT"> *</span>
+</span><span><a class="LN" name="10">   10   </a><span class="CT"> * Target selection: rtwin.tlc</span>
+</span><span><a class="LN" name="11">   11   </a><span class="CT"> * Note: GRT includes extra infrastructure and instrumentation for prototyping</span>
+</span><span><a class="LN" name="12">   12   </a><span class="CT"> * Embedded hardware selection: Generic-&gt;32-bit x86 compatible</span>
+</span><span><a class="LN" name="13">   13   </a><span class="CT"> * Code generation objectives: Unspecified</span>
+</span><span><a class="LN" name="14">   14   </a><span class="CT"> * Validation result: Not run</span>
+</span><span><a class="LN" name="15">   15   </a><span class="CT"> */</span>
+</span><span><a class="LN" name="16">   16   </a>
+</span><span><a class="LN" name="17">   17   </a><font color="#992211">#</font><span class="PP">include</span> <font color="#992211">&quot;rt_zcfcn.h&quot;</font>
+</span><span><a class="LN" name="18">   18   </a>
+</span><span><a class="LN" name="19">   19   </a><span class="CT">/* Detect zero crossings events. */</span>
+</span><span><a class="LN" name="20">   20   </a>ZCEventType <a name="fcn_rt_ZCFcn">rt_ZCFcn</a>(ZCDirection zcDir, ZCSigState* prevZc, real_T currValue)
+</span><span><a class="LN" name="21">   21   </a><b>{</b>
+</span><span><a class="LN" name="22">   22   </a>  slZcEventType zcsDir;
+</span><span><a class="LN" name="23">   23   </a>  slZcEventType tempEv;
+</span><span><a class="LN" name="24">   24   </a>  ZCEventType zcEvent = NO_ZCEVENT;    <span class="CT">/* assume */</span>
+</span><span><a class="LN" name="25">   25   </a>
+</span><span><a class="LN" name="26">   26   </a>  <span class="CT">/* zcEvent matrix */</span>
+</span><span><a class="LN" name="27">   27   </a>  <span class="DT">static</span> <span class="DT">const</span> slZcEventType eventMatrix[4][4] = <b>{</b>
+</span><span><a class="LN" name="28">   28   </a>    <span class="CT">/*          ZER              POS              NEG              UNK */</span>
+</span><span><a class="LN" name="29">   29   </a>    <b>{</b> SL_ZCS_EVENT_NUL, SL_ZCS_EVENT_Z2P, SL_ZCS_EVENT_Z2N, SL_ZCS_EVENT_NUL <b>}</b>,<span class="CT">/* ZER */</span>
+</span><span><a class="LN" name="30">   30   </a>
+</span><span><a class="LN" name="31">   31   </a>    <b>{</b> SL_ZCS_EVENT_P2Z, SL_ZCS_EVENT_NUL, SL_ZCS_EVENT_P2N, SL_ZCS_EVENT_NUL <b>}</b>,<span class="CT">/* POS */</span>
+</span><span><a class="LN" name="32">   32   </a>
+</span><span><a class="LN" name="33">   33   </a>    <b>{</b> SL_ZCS_EVENT_N2Z, SL_ZCS_EVENT_N2P, SL_ZCS_EVENT_NUL, SL_ZCS_EVENT_NUL <b>}</b>,<span class="CT">/* NEG */</span>
+</span><span><a class="LN" name="34">   34   </a>
+</span><span><a class="LN" name="35">   35   </a>    <b>{</b> SL_ZCS_EVENT_NUL, SL_ZCS_EVENT_NUL, SL_ZCS_EVENT_NUL, SL_ZCS_EVENT_NUL <b>}</b><span class="CT">/* UNK */</span>
+</span><span><a class="LN" name="36">   36   </a>  <b>}</b>;
+</span><span><a class="LN" name="37">   37   </a>
+</span><span><a class="LN" name="38">   38   </a>  <span class="CT">/* get prevZcEvent and prevZcSign from prevZc */</span>
+</span><span><a class="LN" name="39">   39   </a>  slZcEventType prevEv = (slZcEventType)(((uint8_T)(*prevZc)) &gt;&gt; 2);
+</span><span><a class="LN" name="40">   40   </a>  slZcSignalSignType prevSign = (slZcSignalSignType)(((uint8_T)(*prevZc)) &amp; 0x03);
+</span><span><a class="LN" name="41">   41   </a>
+</span><span><a class="LN" name="42">   42   </a>  <span class="CT">/* get current zcSignal sign from current zcSignal value */</span>
+</span><span><a class="LN" name="43">   43   </a>  slZcSignalSignType currSign = (slZcSignalSignType)((currValue) &gt; 0.0 ?
+</span><span><a class="LN" name="44">   44   </a>    SL_ZCS_SIGN_POS :
+</span><span><a class="LN" name="45">   45   </a>    ((currValue) &lt; 0.0 ? SL_ZCS_SIGN_NEG : SL_ZCS_SIGN_ZERO));
+</span><span><a class="LN" name="46">   46   </a>
+</span><span><a class="LN" name="47">   47   </a>  <span class="CT">/* get current zcEvent based on prev and current zcSignal value */</span>
+</span><span><a class="LN" name="48">   48   </a>  slZcEventType currEv = eventMatrix[prevSign][currSign];
+</span><span><a class="LN" name="49">   49   </a>
+</span><span><a class="LN" name="50">   50   </a>  <span class="CT">/* get slZcEventType from ZCDirection */</span>
+</span><span><a class="LN" name="51">   51   </a>  <span class="KW">switch</span> (zcDir) <b>{</b>
+</span><span><a class="LN" name="52">   52   </a>   <span class="KW">case</span> ANY_ZERO_CROSSING:
+</span><span><a class="LN" name="53">   53   </a>    zcsDir = SL_ZCS_EVENT_ALL;
+</span><span><a class="LN" name="54">   54   </a>    <span class="KW">break</span>;
+</span><span><a class="LN" name="55">   55   </a>
+</span><span><a class="LN" name="56">   56   </a>   <span class="KW">case</span> FALLING_ZERO_CROSSING:
+</span><span><a class="LN" name="57">   57   </a>    zcsDir = SL_ZCS_EVENT_ALL_DN;
+</span><span><a class="LN" name="58">   58   </a>    <span class="KW">break</span>;
+</span><span><a class="LN" name="59">   59   </a>
+</span><span><a class="LN" name="60">   60   </a>   <span class="KW">case</span> RISING_ZERO_CROSSING:
+</span><span><a class="LN" name="61">   61   </a>    zcsDir = SL_ZCS_EVENT_ALL_UP;
+</span><span><a class="LN" name="62">   62   </a>    <span class="KW">break</span>;
+</span><span><a class="LN" name="63">   63   </a>
+</span><span><a class="LN" name="64">   64   </a>   <span class="KW">default</span>:
+</span><span><a class="LN" name="65">   65   </a>    zcsDir = SL_ZCS_EVENT_NUL;
+</span><span><a class="LN" name="66">   66   </a>    <span class="KW">break</span>;
+</span><span><a class="LN" name="67">   67   </a>  <b>}</b>
+</span><span><a class="LN" name="68">   68   </a>
+</span><span><a class="LN" name="69">   69   </a>  <span class="CT">/*had event, check if double zc happend remove double detection. */</span>
+</span><span><a class="LN" name="70">   70   </a>  <span class="KW">if</span> (slZcHadEvent(currEv, zcsDir)) <b>{</b>
+</span><span><a class="LN" name="71">   71   </a>    currEv = (slZcEventType)(slZcUnAliasEvents(prevEv, currEv));
+</span><span><a class="LN" name="72">   72   </a>  <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="73">   73   </a>    currEv = SL_ZCS_EVENT_NUL;
+</span><span><a class="LN" name="74">   74   </a>  <b>}</b>
+</span><span><a class="LN" name="75">   75   </a>
+</span><span><a class="LN" name="76">   76   </a>  <span class="CT">/* Update prevZc */</span>
+</span><span><a class="LN" name="77">   77   </a>  tempEv = (slZcEventType)(currEv &lt;&lt; 2);<span class="CT">/* shift left by 2 bits */</span>
+</span><span><a class="LN" name="78">   78   </a>  *prevZc = (ZCSigState)((currSign) | (tempEv));
+</span><span><a class="LN" name="79">   79   </a>  <span class="KW">if</span> (currEv &amp; SL_ZCS_EVENT_ALL_DN) <b>{</b>
+</span><span><a class="LN" name="80">   80   </a>    zcEvent = FALLING_ZCEVENT;
+</span><span><a class="LN" name="81">   81   </a>  <b>}</b> <span class="KW">else</span> <span class="KW">if</span> (currEv &amp; SL_ZCS_EVENT_ALL_UP) <b>{</b>
+</span><span><a class="LN" name="82">   82   </a>    zcEvent = RISING_ZCEVENT;
+</span><span><a class="LN" name="83">   83   </a>  <b>}</b> <span class="KW">else</span> <b>{</b>
+</span><span><a class="LN" name="84">   84   </a>    zcEvent = NO_ZCEVENT;
+</span><span><a class="LN" name="85">   85   </a>  <b>}</b>
+</span><span><a class="LN" name="86">   86   </a>
+</span><span><a class="LN" name="87">   87   </a>  <span class="KW">return</span> zcEvent;
+</span><span><a class="LN" name="88">   88   </a><b>}</b>                                      <span class="CT">/* rt_ZCFcn */</span>
+</span><span><a class="LN" name="89">   89   </a>
+</span></pre>
+</td></tr></table>
+</p>
+</body>
+</html>
